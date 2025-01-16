@@ -41,13 +41,13 @@ const SignIn = () => {
             <div className="auth-form w-100">
               <TextField
                 label="Email"
-                containerStyle="bg-white-linear"
+                containerStyle="bg-whit"
                 icon={<MdOutlineMail />}
               />
               <TextField
                 icon={<MdOutlineLock />}
                 label="Password"
-                containerStyle="bg-white-linear"
+                containerStyle="bg-white"
               />
               {/* <PrimaryButton containerStyle="mt-2 mb-2 w-100" label="Sign In" /> */}
               <Link to="/home">Home</Link>
