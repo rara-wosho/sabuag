@@ -11,7 +11,7 @@ const AnnouncementCard = () => {
       <div className="d-flex align-items-center mb-2">
         <img
           style={{ width: 50, height: 50, borderRadius: 10, marginRight: 12 }}
-          src="/images/sabuag-mems.jpeg"
+          src="images/sabuag-mems.jpeg"
           alt=""
         />
         <div>

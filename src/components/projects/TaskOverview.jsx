@@ -110,7 +110,7 @@ function TaskOverview({ userRole = "user", totalTasks }) {
               <img
                 style={{ width: 30, height: 30, objectFit: "cover" }}
                 className="me-2 rounded-circle shadow-sm"
-                src="/images/meme.jpg"
+                src="images/meme.jpg"
                 alt=""
               />
               <div className="info">

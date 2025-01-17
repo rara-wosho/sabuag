@@ -47,7 +47,7 @@ const SideBar = ({ activePage, setShowSidebar, showSidebar }) => {
             <img
               style={{ width: 40, height: 40, objectFit: "cover" }}
               className="rounded-circle"
-              src="/images/sabuag-mems.jpeg"
+              src="images/sabuag-memes.jpeg"
               alt="user account"
             />
             <div className="sidebar-user-info ps-2 sidebar-label">

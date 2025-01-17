@@ -8,22 +8,22 @@ import { MdOutlineMail, MdOutlineLock } from "react-icons/md";
 const SignIn = () => {
   return (
     <div className="sign-in-page p-3 ">
-      <div className="position-absolute top-0 start-0 invisible">
-        <ToggleDarkMode />
-      </div>
       <div className="d-flex align-items-center mb-3">
         <img
-          style={{ width: 70, height: 70, objectFit: "contain" }}
-          src="/images/official-sabuag.png"
+          style={{ width: 50, height: 50, objectFit: "contain" }}
+          src="images/official-sabuag.png"
           alt=""
         />
-        <p className="txt-primary mb-0 fw-semibold fs-1 ms-1">SABUAG</p>
+        <p className="txt-primary mb-0 fw-semibold fs-2 ms-1">SABUAG</p>
       </div>
       <div className="row row-cols-1 row-cols-md-2 bg-white rounded-3 py-2 py-lg-3 px-2 px-lg-3 shadow">
         <div className="col first-col px-4 d-none d-md-flex rounded-2 align-items-center justify-content-center flex-column">
-          {/* <p className="text-center fs-3 mb-0 fw-semibold">SABUAG</p> */}
           <div className="img-container">
-            <img className="img-fluid" src="/images/signin2.png" alt="" />
+            <img
+              className="img-fluid"
+              src="images/signin2.png"
+              alt="sign in image"
+            />
           </div>
           <p className="text-secondary text-center fs-6">
             Sustainable and Achievable Broadcasting with Unbiased and Attainable
@@ -41,7 +41,7 @@ const SignIn = () => {
             <div className="auth-form w-100">
               <TextField
                 label="Email"
-                containerStyle="bg-whit"
+                containerStyle="bg-white"
                 icon={<MdOutlineMail />}
               />
               <TextField

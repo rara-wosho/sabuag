@@ -4,7 +4,7 @@ const MemberCard = ({ name, position }) => {
       <img
         className="me-2 ms-1 rounded-2"
         style={{ width: 50, height: 50, objectFit: "cover" }}
-        src="/images/meme.jpg"
+        src="images/meme.jpg"
         alt=""
       />
       <div>

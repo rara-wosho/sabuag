@@ -27,7 +27,7 @@ function ItemCard() {
           <img
             className="rounded-circle me-2 shadow-sm"
             style={{ width: 18, height: 18, objectFit: "cover" }}
-            src="/images/meme.jpg"
+            src="images/meme.jpg"
             alt="owner's image"
           />
           <p className="mb-0 fs-7 text-truncate text-muted">Israel De Vera</p>

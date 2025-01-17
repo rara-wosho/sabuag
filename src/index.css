@@ -53,7 +53,7 @@
 }
 
 [data-theme="dark"] {
-  --bg-body2: rgb(16, 25, 33);
+  --bg-body2: rgb(23, 32, 40);
   --bg-body: #080b0b;
   --bg-primary: #3a8bb3;
   --bg-primary2: #3a8bb3;
@@ -61,11 +61,11 @@
   --bg-primary4: #3a8bb3;
   --bg-primary-hover: rgb(26, 54, 87);
   --bg-secondary: #00628c;
-  --bg-white: #0e1216;
+  --bg-white: rgb(18, 22, 26);
   --bg-white-linear: linear-gradient(
     180deg,
-    rgb(17, 21, 25) 0%,
-    rgb(14, 18, 22) 100%
+    rgb(18, 22, 26) 0%,
+    rgb(18, 22, 26) 100%
   );
   --bg-primary-linear: linear-gradient(0deg, #032d57 0%, #105488 100%);
   --home-after: linear-gradient(0deg, #080b0b 0%, #0c131ac2 100%);
@@ -84,7 +84,7 @@
   --ustp-primary-color: #1a1752;
   --ustp-secondary-color: #3a8bb3;
 
-  --border-black: rgba(20, 33, 47, 0.84);
+  --border-black: rgba(24, 37, 51, 0.9);
   --border-dark-black: rgb(80, 80, 80);
   --text-secondary: rgb(130, 130, 130);
   --text-muted: rgb(150, 150, 150);
@@ -470,10 +470,14 @@ nav.navbar {
 .textfield-container textarea {
   background-color: transparent;
   outline: none;
-  border: 1px solid rgba(168, 176, 185, 0.379);
+  border: 1px solid rgb(200, 200, 200);
   border-radius: 8px;
   transition: all 0.3s;
   font-size: 0.9rem;
+}
+.textfield-container textarea::placeholder,
+.textfield-container input::placeholder {
+  opacity: 0;
 }
 
 .textfield-container .input:focus,

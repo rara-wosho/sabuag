@@ -53,7 +53,7 @@ const TextField = ({
           name={name}
           value={value}
           rows={rows}
-          placeholder=""
+          placeholder={label}
           className="px-3 text-muted py-3"
           onChange={onChange}
           onKeyDown={handleKeyDown}
@@ -63,7 +63,7 @@ const TextField = ({
         <input
           name={name}
           value={value}
-          placeholder=""
+          placeholder={label}
           className="input px-3 text-muted"
           type={type}
           onChange={onChange}
