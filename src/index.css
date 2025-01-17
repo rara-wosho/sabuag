@@ -46,7 +46,7 @@
   --sidebar-width: 290px;
   --sidebar-width-shrink: 99px;
 
-  --border-shadow-color: rgba(0, 30, 151, 0.311);
+  --border-shadow-color: rgba(0, 30, 151, 0.45);
   --border-secondary: rgb(180, 180, 170);
   --border-black: rgb(225, 225, 225);
   --border-dark-black: rgb(200, 200, 200);
@@ -55,7 +55,7 @@
 }
 
 [data-theme="dark"] {
-  --bg-body2: rgb(34, 51, 65);
+  --bg-body2: rgb(44, 61, 75);
   --bg-body: rgb(15, 18, 18);
   --bg-primary: #3a8bb3;
   --bg-primary2: #3a8bb3;
@@ -63,7 +63,7 @@
   --bg-primary4: #3a8bb3;
   --bg-primary-hover: rgb(26, 54, 87);
   --bg-secondary: #00628c;
-  --bg-white: rgb(30, 37, 45);
+  --bg-white: rgb(26, 33, 41);
   --bg-white-linear: linear-gradient(
     180deg,
     rgb(30, 37, 45) 0%,
