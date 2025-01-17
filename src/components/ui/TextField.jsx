@@ -37,7 +37,7 @@ const TextField = ({
 
   return (
     <div
-      className={`${containerStyle} textfield-container d-flex flex-column position-relative border`}
+      className={`${containerStyle} textfield-container d-flex flex-column position-relative`}
     >
       {showCount && (
         <div

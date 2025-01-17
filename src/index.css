@@ -46,6 +46,8 @@
   --sidebar-width: 290px;
   --sidebar-width-shrink: 99px;
 
+  --border-shadow-color: rgba(0, 30, 151, 0.311);
+  --border-secondary: rgb(180, 180, 170);
   --border-black: rgb(225, 225, 225);
   --border-dark-black: rgb(200, 200, 200);
   --text-secondary: rgb(120, 120, 120);
@@ -53,22 +55,23 @@
 }
 
 [data-theme="dark"] {
-  --bg-body2: rgb(23, 32, 40);
-  --bg-body: #080b0b;
+  --bg-body2: rgb(34, 51, 65);
+  --bg-body: rgb(15, 18, 18);
   --bg-primary: #3a8bb3;
   --bg-primary2: #3a8bb3;
   --bg-primary3: #3a8bb3;
   --bg-primary4: #3a8bb3;
   --bg-primary-hover: rgb(26, 54, 87);
   --bg-secondary: #00628c;
-  --bg-white: rgb(18, 22, 26);
+  --bg-white: rgb(30, 37, 45);
   --bg-white-linear: linear-gradient(
     180deg,
-    rgb(18, 22, 26) 0%,
-    rgb(18, 22, 26) 100%
+    rgb(30, 37, 45) 0%,
+    rgb(30, 37, 45) 100%
   );
   --bg-primary-linear: linear-gradient(0deg, #032d57 0%, #105488 100%);
-  --home-after: linear-gradient(0deg, #080b0b 0%, #0c131ac2 100%);
+
+  --home-after: linear-gradient(0deg, rgb(15, 18, 18) 0%, rgb(19, 23, 27) 100%);
 
   --txt-black: rgb(160, 160, 160);
   --txt-primary1: #3a8bb3;
@@ -84,8 +87,11 @@
   --ustp-primary-color: #1a1752;
   --ustp-secondary-color: #3a8bb3;
 
-  --border-black: rgba(24, 37, 51, 0.9);
+  --border-shadow-color: rgba(11, 145, 234, 0.389);
+  --border-black: rgb(28, 56, 86);
   --border-dark-black: rgb(80, 80, 80);
+
+  --border-secondary: rgb(84, 99, 116);
   --text-secondary: rgb(130, 130, 130);
   --text-muted: rgb(150, 150, 150);
 }
@@ -444,7 +450,7 @@ nav.navbar {
 
 .textfield-container .input {
   width: 100%;
-  border: 1px solid rgba(168, 176, 185, 0.379);
+  border: 1px solid var(--border-secondary);
   outline: none;
   background-color: transparent;
   padding-block: 12px;
@@ -470,7 +476,7 @@ nav.navbar {
 .textfield-container textarea {
   background-color: transparent;
   outline: none;
-  border: 1px solid rgb(200, 200, 200);
+  border: 1px solid var(--border-secondary);
   border-radius: 8px;
   transition: all 0.3s;
   font-size: 0.9rem;
@@ -484,7 +490,8 @@ nav.navbar {
 .textfield-container .input:hover,
 .textfield-container textarea:focus,
 .textfield-container textarea:hover {
-  border-color: var(--bg-primary3);
+  border-color: var(--border-shadow-color);
+  box-shadow: 0 0 0 1px var(--border-shadow-color);
 }
 
 .textfield-container .label {
@@ -994,7 +1001,7 @@ nav.navbar {
 }
 
 .border-secondary {
-  border: 1px solid rgba(100, 100, 100, 0.256) !important;
+  border: 1px solid var(--border-secondary) !important;
 }
 
 .hover-primary:hover {
