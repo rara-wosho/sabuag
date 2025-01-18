@@ -73,7 +73,7 @@
 
   --home-after: linear-gradient(0deg, rgb(15, 18, 18) 0%, rgb(19, 23, 27) 100%);
 
-  --txt-black: rgb(160, 160, 160);
+  --txt-black: rgb(190, 190, 190);
   --txt-primary1: #3a8bb3;
   --txt-primary2: #3a8bb3;
   --txt-primary3: #3a8bb3;
@@ -92,8 +92,8 @@
   --border-dark-black: rgb(80, 80, 80);
 
   --border-secondary: rgb(84, 99, 116);
-  --text-secondary: rgb(130, 130, 130);
-  --text-muted: rgb(150, 150, 150);
+  --text-secondary: rgb(170, 170, 170);
+  --text-muted: rgb(185, 185, 185);
 }
 
 .text-muted {
@@ -308,18 +308,29 @@ nav.navbar {
 }
 
 /* SIDEBAR  */
+
 .sidebar {
   width: var(--sidebar-width);
   transition: width 0.3s;
   overflow-x: hidden;
   flex-shrink: 0;
-  height: 100vh;
+  height: 100dvh;
   z-index: 1000;
   position: fixed;
   top: 0;
   left: 0;
   box-shadow: 0 5px 10px rgba(10, 10, 10, 0.05);
 }
+
+.sidebar-backdrop {
+  position: fixed;
+  width: 100vw;
+  height: 100dvh;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+}
+
 .home-content {
   margin-left: var(--sidebar-width);
   transition: all 0.3s;
@@ -714,16 +725,21 @@ nav.navbar {
 }
 .searchbar-container {
   transition: all 0.3s;
-  border: 2px solid #827fc21a;
+  border: 1px solid var(--border-secondary);
   outline: none;
   font-size: 0.8rem;
 }
-.searchbar-container:hover {
-  border: 2px solid var(--bg-primary2);
+
+.searchbar-container input::placeholder {
+  color: var(--text-muted);
+}
+.searchbar-container:has(input:focus),
+.searchbar-container:has(input:hover) {
+  border-color: var(--bg-primary2);
 }
 
-.searchbar-container:has(input:focus) {
-  border: 2px solid #827fc274;
+.searchbar-outline input::placeholder {
+  color: var(--text-secondary);
 }
 
 #staticBackdrop {

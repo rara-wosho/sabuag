@@ -10,7 +10,7 @@ const MyTasks = () => {
     setFilterStatus(filter);
   };
   return (
-    <div className="mytask-page bg-white-linear min-h-vh rounded-4 px-3 px-lg-5 pt-lg-4 pb-lg-4">
+    <div className="mytask-page bg-white min-h-vh rounded-4 px-3 px-lg-5 pt-lg-4 pb-lg-4">
       {/* status tabs  */}
       <div className="d-flex align-items-center mb-3 mt-2">
         <div

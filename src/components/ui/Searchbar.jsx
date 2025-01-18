@@ -12,7 +12,7 @@ const Searchbar = ({
       className={`${containerStyle} searchbar-container d-flex align-items-center`}
     >
       <input
-        className={`${inputStyle} w-100 border-0`}
+        className={`${inputStyle} w-100 border-0 text-muted`}
         style={{ backgroundColor: "transparent", outline: 0 }}
         type="search"
         placeholder={placeholder}

@@ -2,7 +2,7 @@ function MytaskCard() {
   return (
     <div className="mytask-card bg-hover">
       <p className="mb-0 mytask-title txt-black">
-        make some caption for the sports
+        Lorem ipsum dolor sit amet consectetur.
       </p>
     </div>
   );

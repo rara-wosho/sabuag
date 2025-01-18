@@ -11,8 +11,8 @@ const ProjectCard = ({ value, toggleList, title }) => {
       <div
         className={`w-100 project-card pointer ${
           toggleList
-            ? "rounded-0 mb-2 list"
-            : "bg-body2 px-3 shadow-sm border rounded-3 mb-1"
+            ? "rounded-0 mb-2 list border-bottom"
+            : "bg-body2 px-3 shadow-sm rounded-3 mb-1"
         } py-2`}
       >
         <div className="project-card-header">

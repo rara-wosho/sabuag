@@ -8,6 +8,7 @@ import OutlineButton from "../../components/ui/OutlineButton";
 import Searchbar from "../../components/ui/Searchbar";
 import ProjectContainer from "../../components/projects/ProjectContainer";
 import TabsContainer from "../../components/projects/TabsContainer";
+import SearchbarOutline from "../../components/ui/SearchbarOutline";
 import ProjectForm from "../../components/projects/ProjectForm";
 import PinnedProjects from "../../components/projects/PinnedProjects";
 import SortingTab from "../../components/ui/SortingTab";
@@ -36,7 +37,7 @@ const ProjectList = () => {
   };
   const handleCreateProject = () => setOpenModal(true);
   return (
-    <div className="bg-white-linear min-h-vh rounded-4 px-3 px-lg-5 pt-lg-4 pb-lg-4">
+    <div className="bg-white min-h-vh rounded-4 px-3 px-lg-5 pt-lg-4 pb-lg-4">
       <ProjectForm closeModal={closeModal} openModal={openModal} />
       <div className="project-header pb-2 rounded-3 pt-3 pb-2 position-relative d-flex flex-column">
         <div className="left-side py-2 py-lg-0 d-flex align-items-center">
@@ -65,10 +66,10 @@ const ProjectList = () => {
             </div>
           </div>
           <Searchbar
-            containerStyle="w-100 bg-body2 rounded-3"
-            inputStyle="py-2 px-3"
-            placeholder="Search project"
+            inputStyle="ps-3"
+            containerStyle="w-100 rounded-2 bg-body2"
             buttonLabel="Search"
+            placeholder="Search Project"
           />
         </div>
       </div>
