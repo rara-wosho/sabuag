@@ -82,7 +82,7 @@ const ProjectForm = ({ openModal, closeModal }) => {
       {/* <p>{project.title} </p>
       <p>{project.desc} </p>
       <p>{project.privacy} </p> */}
-      <div className="p-3 py-4 p-md-5 bg-white-linear rounded-3 project-form w-100">
+      <div className="p-3 py-4 p-md-4 bg-white-linear rounded-3 project-form w-100">
         <div className="project-form-header d-flex align-items-center mb-3">
           <img style={{ width: 50, height: 50 }} src={png} alt="error" />
           <p className="project-form-0 ms-2 mb-0 fs-5 txt-primary3 fw-semibold">

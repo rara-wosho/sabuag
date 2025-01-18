@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { FaAngleDown } from "react-icons/fa6";
+import { IoCloseOutline } from "react-icons/io5";
 
 const DropdownSearch = ({
   label,
@@ -9,6 +8,7 @@ const DropdownSearch = ({
   searchTerm,
   results,
   handlePick,
+  closeSelect,
 }) => {
   return (
     <div
@@ -17,22 +17,26 @@ const DropdownSearch = ({
       <input
         onChange={handleSearch}
         style={{ backgroundColor: "transparent", paddingBlock: 12 }}
-        className={`${inputStyle} w-100 border-0`}
+        className={`${inputStyle} w-100 border-0 text-muted`}
         type="search"
         placeholder={label}
         name=""
         value={searchTerm}
         id=""
       />
-      <div className="icon">
-        <FaAngleDown color="gray" />
-      </div>
 
       {searchTerm.length > 2 && (
         <div
-          style={{ top: 60, maxHeight: 200, overflowY: "auto" }}
-          className="dropdown-content bg-white-linear shadow rounded-3 position-absolute w-100"
+          style={{ bottom: 60, maxHeight: 250, overflowY: "auto" }}
+          className="dropdown-content border bg-white shadow rounded-3 position-absolute w-100"
         >
+          <div
+            onClick={closeSelect}
+            className="d-flex text-muted px-3 py-3 border-bottom align-items-center justify-content-between pointer"
+          >
+            <p className="mb-0 text-end">Results</p>
+            <IoCloseOutline size={22} />
+          </div>
           {results.length > 0 ? (
             results.map((result, index) => {
               return (
@@ -41,7 +45,7 @@ const DropdownSearch = ({
                   onClick={() => handlePick(result.uid)}
                   className="result-card px-3 py-2 w-100"
                 >
-                  <p className="py-1 mb-0">{result.name}</p>
+                  <p className="py-1 mb-0 text-muted">{result.name}</p>
                 </div>
               );
             })

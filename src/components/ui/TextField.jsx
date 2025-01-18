@@ -50,6 +50,7 @@ const TextField = ({
 
       {rows > 0 ? (
         <textarea
+          style={{ resize: "none" }}
           name={name}
           value={value}
           rows={rows}

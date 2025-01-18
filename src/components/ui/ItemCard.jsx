@@ -18,7 +18,7 @@ function ItemCard() {
             Lorem ipsum dolor sit amet consectetur.
           </p>
           {true && (
-            <div className="ps-2">
+            <div className="ps-2 ms-auto">
               <RiPushpinFill size={14} />
             </div>
           )}

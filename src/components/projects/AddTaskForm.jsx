@@ -3,7 +3,7 @@ import TextField from "../ui/TextField";
 import DropdownSearch from "../ui/DropdownSearch";
 
 import { useEffect, useState } from "react";
-import { FaSleigh } from "react-icons/fa6";
+import { IoCloseOutline } from "react-icons/io5";
 
 const AddTaskForm = ({ setOpenDialog, openDialog }) => {
   const [loading, setLoading] = useState(true);
@@ -22,6 +22,16 @@ const AddTaskForm = ({ setOpenDialog, openDialog }) => {
       uid: 2,
       name: "James",
       position: "Lit president",
+    },
+    {
+      uid: 3,
+      name: "Sanny",
+      position: "Photojournalist",
+    },
+    {
+      uid: 3,
+      name: "Sanny",
+      position: "Photojournalist",
     },
     {
       uid: 3,
@@ -48,6 +58,10 @@ const AddTaskForm = ({ setOpenDialog, openDialog }) => {
     setSearchTerm(e.target.value);
     setResults(members);
     console.log(members);
+  };
+
+  const closeSelect = () => {
+    setSearchTerm("");
   };
 
   const handlePick = (uid) => {
@@ -89,7 +103,7 @@ const AddTaskForm = ({ setOpenDialog, openDialog }) => {
     >
       <div
         style={{ overflowY: "auto" }}
-        className="p-3 py-4 p-md-5 bg-white-linear rounded-3 project-form w-100"
+        className="p-3 py-4 p-md-4 bg-white-linear rounded-3 project-form w-100"
       >
         <div className="dialog-header d-flex align-items-center mb-3">
           <p className="project-form-0 ms-2 mb-0 fs-5 txt-primary3 fw-semibold">
@@ -135,6 +149,7 @@ const AddTaskForm = ({ setOpenDialog, openDialog }) => {
               searchTerm={searchTerm}
               results={results}
               handlePick={handlePick}
+              closeSelect={closeSelect}
             />
             <div className="assigned-members">
               {assignedMembers?.map((mem, index) => {
@@ -152,9 +167,9 @@ const AddTaskForm = ({ setOpenDialog, openDialog }) => {
                     </div>
                     <span
                       onClick={() => removePick(mem.uid)}
-                      className="ms-auto px-2 border"
+                      className="ms-auto px-2 text-muted pointer"
                     >
-                      X
+                      <IoCloseOutline size={22} />
                     </span>
                   </div>
                 );

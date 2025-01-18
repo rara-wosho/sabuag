@@ -4,7 +4,7 @@ import { FaAngleDown } from "react-icons/fa6";
 
 import { useNavigate } from "react-router-dom";
 
-function TaskOverview({ userRole = "user", totalTasks }) {
+function TaskOverview({ userRole = "admin", totalTasks }) {
   const navigate = useNavigate();
 
   const handleClickTask = (taskID) => {
