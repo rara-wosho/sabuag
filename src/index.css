@@ -96,6 +96,19 @@
   --text-muted: rgb(185, 185, 185);
 }
 
+* {
+  font-family: "Poppins", serif;
+  font-weight: 400;
+  font-style: normal;
+
+  /* Restrict transitions to relevant properties */
+  transition: background-color 0.1s, color 0.1s;
+}
+
+a {
+  text-decoration: none;
+}
+
 .text-muted {
   color: var(--text-muted) !important;
 }
@@ -193,19 +206,6 @@
   background-color: var(--bg-secondary) !important;
 }
 
-* {
-  font-family: "Poppins", serif;
-  font-weight: 400;
-  font-style: normal;
-
-  /* Restrict transitions to relevant properties */
-  transition: background-color 0.1s, color 0.1s;
-}
-
-a {
-  text-decoration: none;
-}
-
 .poppins-thin {
   font-family: "Poppins", serif;
   font-weight: 100;
@@ -242,6 +242,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  background-position: center;
   position: relative;
   display: flex;
   align-items: center;
@@ -461,7 +462,6 @@ nav.navbar {
 
 .textfield-container .input {
   width: 100%;
-  border: 1px solid var(--border-secondary);
   outline: none;
   background-color: transparent;
   padding-block: 12px;
@@ -470,6 +470,8 @@ nav.navbar {
   transition: all 0.3s;
   border-radius: 8px;
   font-size: 0.9rem;
+  padding-inline: 16px;
+  border: 1px solid var(--border-secondary);
 }
 
 .dropdown-search {
@@ -497,10 +499,10 @@ nav.navbar {
   opacity: 0;
 }
 
-.textfield-container .input:focus,
-.textfield-container .input:hover,
-.textfield-container textarea:focus,
-.textfield-container textarea:hover {
+.textfield-container .input:not(:read-only):focus,
+.textfield-container .input:not(:read-only):hover,
+.textfield-container textarea:not(:read-only):focus,
+.textfield-container textarea.input:not(:read-only):hover {
   border-color: var(--border-shadow-color);
   box-shadow: 0 0 0 1px var(--border-shadow-color);
 }
@@ -1050,6 +1052,10 @@ nav.navbar {
 .rounded-top-4 {
   border-top-right-radius: 12px;
   border-top-left-radius: 12px;
+}
+.rounded-bottom-4 {
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
 }
 .center {
   align-items: center;

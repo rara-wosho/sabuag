@@ -49,22 +49,19 @@ const SignIn = () => {
                 label="Password"
                 containerStyle="bg-white"
               />
-              {/* <PrimaryButton containerStyle="mt-2 mb-2 w-100" label="Sign In" /> */}
-              <Link to="/home">Home</Link>
-              <SecondaryButton
-                containerStyle="w-100 text-white mb-2 py-2 rounded-3 shadow-sm"
-                label="Sign In"
-              />
-              <a
-                className="text-secondary fs-6 text-start mb-0 d-block mb-4"
-                href="#"
-              >
-                forgot password?
+              <a className="txt-primary fs-7 text-start mb-4 d-block" href="#">
+                Forgot Password?
               </a>
+              <Link to="/home">
+                <SecondaryButton
+                  containerStyle="w-100 text-white mb-4 py-2 rounded-3 shadow-sm"
+                  label="Sign In"
+                />
+              </Link>
 
-              <p className="mb-3 text-center text-secondary">
+              <p className="mb-3 text-center fs-7 text-secondary">
                 Wanna join SABUAG?
-                <Link className="txt-primary fw-semibold ms-2" to="/signup">
+                <Link className="txt-primary fw-semibold ms-1" to="/signup">
                   Apply Now
                 </Link>
               </p>

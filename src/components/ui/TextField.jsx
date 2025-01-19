@@ -9,6 +9,7 @@ const TextField = ({
   showCount = false,
   icon,
   reference,
+  readOnly = false,
 }) => {
   const handleKeyDown = (e) => {
     if (e.key === "Tab") {
@@ -59,15 +60,18 @@ const TextField = ({
           onChange={onChange}
           onKeyDown={handleKeyDown}
           ref={reference}
+          readOnly={readOnly}
         />
       ) : (
         <input
           name={name}
           value={value}
           placeholder={label}
-          className="input px-3 text-muted"
+          className={`input text-muted`}
           type={type}
           onChange={onChange}
+          readOnly={readOnly}
+          ref={reference}
         />
       )}
       <label className="px-2 label text-muted d-flex align-items-center">
