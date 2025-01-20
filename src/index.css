@@ -46,12 +46,18 @@
   --sidebar-width: 290px;
   --sidebar-width-shrink: 99px;
 
-  --border-shadow-color: rgba(0, 30, 151, 0.45);
+  --border-shadow-color: rgba(0, 30, 151, 0.5);
   --border-secondary: rgb(180, 180, 170);
   --border-black: rgb(225, 225, 225);
   --border-dark-black: rgb(200, 200, 200);
   --text-secondary: rgb(120, 120, 120);
   --text-muted: rgb(80, 80, 80);
+
+  --sign-in-after: linear-gradient(
+    180deg,
+    rgba(232, 239, 247, 0.75) 0%,
+    rgba(232, 239, 247, 1) 100%
+  );
 }
 
 [data-theme="dark"] {
@@ -94,6 +100,12 @@
   --border-secondary: rgb(84, 99, 116);
   --text-secondary: rgb(170, 170, 170);
   --text-muted: rgb(185, 185, 185);
+
+  --sign-in-after: linear-gradient(
+    180deg,
+    rgba(15, 18, 18, 0.9) 0%,
+    rgba(15, 18, 18, 1) 100%
+  );
 }
 
 * {
@@ -236,7 +248,7 @@ body {
 }
 
 .sign-in-page,
-.sign-up-page {
+.join-us-page {
   background-image: url("/images/sabuag-mems.jpeg");
   min-height: 100vh;
   background-size: cover;
@@ -252,16 +264,11 @@ body {
 }
 
 .sign-in-page::after,
-.sign-up-page::after {
+.join-us-page::after {
   inset: 0;
   content: "";
   position: absolute;
-  background: rgb(232, 239, 247);
-  background: linear-gradient(
-    180deg,
-    rgba(232, 239, 247, 0.9) 0%,
-    rgba(232, 239, 247, 1) 100%
-  );
+  background: var(--sign-in-after);
   z-index: -1;
 }
 

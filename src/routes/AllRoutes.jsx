@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import SignIn from "../pages/auth/Sign-in";
-import SignUp from "../pages/auth/Sign-up";
 import PageNotFound from "../pages/PageNotFound";
 import Dashboard from "../pages/DashboardLayout/index";
 import ProjectList from "../pages/DashboardLayout/ProjectList";
@@ -14,11 +13,13 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import Resources from "../pages/DashboardLayout/Resources";
 import CollectionItem from "../pages/DashboardLayout/CollectionItem";
 import AddItem from "../pages/DashboardLayout/AddItem";
+import JoinUs from "../pages/auth/JoinUs";
 
 const AllRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<SignIn />} />
+      <Route path="/join-us" element={<JoinUs />} />
 
       <Route element={<ProtectedRoutes />}>
         <Route path="/home" element={<DashboardLayout />}>

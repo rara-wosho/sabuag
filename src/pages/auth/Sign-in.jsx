@@ -7,8 +7,11 @@ import { MdOutlineMail, MdOutlineLock } from "react-icons/md";
 
 const SignIn = () => {
   return (
-    <div className="sign-in-page p-3 ">
-      <div className="d-flex align-items-center mb-3">
+    <div className="sign-in-page p-3">
+      <div className="fixed-top p-2">
+        <ToggleDarkMode />
+      </div>
+      <div className="d-flex align-items-center mb-2">
         <img
           style={{ width: 50, height: 50, objectFit: "contain" }}
           src="images/official-sabuag.png"
@@ -17,7 +20,7 @@ const SignIn = () => {
         <p className="txt-primary mb-0 fw-semibold fs-2 ms-1">SABUAG</p>
       </div>
       <div className="row row-cols-1 row-cols-md-2 bg-white rounded-3 py-2 py-lg-3 px-2 px-lg-3 shadow">
-        <div className="col first-col px-4 d-none d-md-flex rounded-2 align-items-center justify-content-center flex-column">
+        <div className="col first-col bg-body2 px-4 d-none d-md-flex rounded-2 align-items-center justify-content-center flex-column">
           <div className="img-container">
             <img
               className="img-fluid"
@@ -25,9 +28,13 @@ const SignIn = () => {
               alt="sign in image"
             />
           </div>
-          <p className="text-secondary text-center fs-6">
-            Sustainable and Achievable Broadcasting with Unbiased and Attainable
-            Goals
+          <p className="text-muted text-center fs-6">
+            <span className="txt-primary3">S</span>ustainable and{" "}
+            <span className="txt-primary3">A</span>
+            chievable <span className="txt-primary3">B</span>
+            roadcasting with <span className="txt-primary3">U</span>
+            nbiased and <span className="txt-primary3">A</span>
+            ttainable <span className="txt-primary3">G</span>oals
           </p>
         </div>
         <div className="col ps-3 pe-3 pe-md-2 ps-md-4 py-5">
@@ -49,7 +56,10 @@ const SignIn = () => {
                 label="Password"
                 containerStyle="bg-white"
               />
-              <a className="txt-primary fs-7 text-start mb-4 d-block" href="#">
+              <a
+                className="txt-primary fs-8 fw-medium text-start mb-4 d-block"
+                href="#"
+              >
                 Forgot Password?
               </a>
               <Link to="/home">
@@ -59,12 +69,12 @@ const SignIn = () => {
                 />
               </Link>
 
-              <p className="mb-3 text-center fs-7 text-secondary">
-                Wanna join SABUAG?
-                <Link className="txt-primary fw-semibold ms-1" to="/signup">
-                  Apply Now
-                </Link>
-              </p>
+              <Link
+                className="txt-primary text-center d-block fs-7 fw-semibold ms-1"
+                to="/join-us"
+              >
+                Join Our Organization
+              </Link>
               {/* <button className="btn btn-outline-secondary w-100 mb-3">
                 Sign up
               </button> */}
@@ -76,7 +86,7 @@ const SignIn = () => {
         // style={{ bottom: "1rem" }}
         className="mb-0 mt-4 text-muted fs-8"
       >
-        Rael De Vera@2024
+        &copy;Israel De Vera@2025
       </div>
     </div>
   );
