@@ -103,8 +103,8 @@
 
   --sign-in-after: linear-gradient(
     180deg,
-    rgba(15, 18, 18, 0.9) 0%,
-    rgba(15, 18, 18, 1) 100%
+    rgba(15, 18, 18, 0.88) 0%,
+    rgba(15, 18, 18, 0.99) 100%
   );
 }
 
@@ -467,7 +467,8 @@ nav.navbar {
   margin-bottom: 16px;
 }
 
-.textfield-container .input {
+.textfield-container .input,
+.textfield-container select {
   width: 100%;
   outline: none;
   background-color: transparent;
@@ -481,6 +482,11 @@ nav.navbar {
   border: 1px solid var(--border-secondary);
 }
 
+.textfield-container select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
 .dropdown-search {
   border: 2px solid rgba(168, 176, 185, 0.2);
   transition: all 0.3s;
@@ -509,7 +515,8 @@ nav.navbar {
 .textfield-container .input:not(:read-only):focus,
 .textfield-container .input:not(:read-only):hover,
 .textfield-container textarea:not(:read-only):focus,
-.textfield-container textarea.input:not(:read-only):hover {
+.textfield-container textarea:not(:read-only):hover,
+.textfield-container select:not(:disabled):hover {
   border-color: var(--border-shadow-color);
   box-shadow: 0 0 0 1px var(--border-shadow-color);
 }
@@ -526,7 +533,8 @@ nav.navbar {
 .textfield-container input:focus + .label,
 .textfield-container input:not(:placeholder-shown) + .label,
 .textfield-container textarea:focus + .label,
-.textfield-container textarea:not(:placeholder-shown) + .label {
+.textfield-container textarea:not(:placeholder-shown) + .label,
+.textfield-container select + .label {
   top: -8px;
   font-size: 0.7rem;
   background-color: var(--bg-white);

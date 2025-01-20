@@ -1,3 +1,6 @@
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { useState } from "react";
+
 const TextField = ({
   label,
   type = "text",
@@ -10,7 +13,14 @@ const TextField = ({
   icon,
   reference,
   readOnly = false,
+  options = [],
 }) => {
+  const [showPass, setShowPass] = useState(false);
+
+  const toggleShowPass = () => {
+    setShowPass((prev) => !prev);
+  };
+
   const handleKeyDown = (e) => {
     if (e.key === "Tab") {
       e.preventDefault(); // Prevent default tab behavior
@@ -49,7 +59,41 @@ const TextField = ({
         </div>
       )}
 
-      {rows > 0 ? (
+      {type === "password" && (
+        <div
+          onClick={toggleShowPass}
+          style={{ right: 20, top: "50%", transform: "translateY(-50%)" }}
+          className="text-muted fs-5 pointer position-absolute"
+        >
+          {showPass ? <FaRegEye /> : <FaRegEyeSlash />}
+        </div>
+      )}
+
+      {type === "select" ? (
+        <select
+          disabled={readOnly}
+          style={{ paddingBlock: 12 }}
+          name={name}
+          value={value}
+          onChange={onChange}
+          className="px-3 text-muted"
+          ref={reference}
+          readOnly={readOnly}
+        >
+          <option disabled value="default">
+            Select
+          </option>
+          {options.map((option, index) => (
+            <option
+              style={{ color: "rgb(70,70,70)" }}
+              key={index}
+              value={option.value}
+            >
+              {option.label}
+            </option>
+          ))}
+        </select>
+      ) : rows > 0 ? (
         <textarea
           style={{ resize: "none" }}
           name={name}
@@ -68,12 +112,13 @@ const TextField = ({
           value={value}
           placeholder={label}
           className={`input text-muted`}
-          type={type}
+          type={type === "password" && !showPass ? "password" : "text"}
           onChange={onChange}
           readOnly={readOnly}
           ref={reference}
         />
       )}
+
       <label className="px-2 label text-muted d-flex align-items-center">
         {icon && <div className="me-1">{icon}</div>}
         {label}

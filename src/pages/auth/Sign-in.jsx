@@ -50,14 +50,16 @@ const SignIn = () => {
                 label="Email"
                 containerStyle="bg-white"
                 icon={<MdOutlineMail />}
+                type="text"
               />
               <TextField
                 icon={<MdOutlineLock />}
                 label="Password"
+                type="password"
                 containerStyle="bg-white"
               />
               <a
-                className="txt-primary fs-8 fw-medium text-start mb-4 d-block"
+                className="txt-primary2 fs-8 fw-medium text-start mb-4 d-block"
                 href="#"
               >
                 Forgot Password?
@@ -70,7 +72,7 @@ const SignIn = () => {
               </Link>
 
               <Link
-                className="txt-primary text-center d-block fs-7 fw-semibold ms-1"
+                className="txt-primary2 text-center d-block fs-7 fw-semibold ms-1"
                 to="/join-us"
               >
                 Join Our Organization

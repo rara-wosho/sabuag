@@ -27,6 +27,12 @@ const ProfileSection = () => {
     });
   };
 
+  // HANDLING GENDER SELECT
+  const [gender, setGender] = useState("default");
+  const handleGender = (e) => {
+    setGender(e.target.value);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
@@ -76,6 +82,19 @@ const ProfileSection = () => {
         </div>
         <div className="col px-1">
           <TextField readOnly={readOnly} value={20} label="Age" />
+        </div>
+        <div className="col px-1">
+          <TextField
+            readOnly={readOnly}
+            value={gender}
+            label="Gender"
+            type="select"
+            onChange={handleGender}
+            options={[
+              { value: "Male", label: "Male" },
+              { value: "Female", label: "Female" },
+            ]}
+          />
         </div>
       </div>
     </div>
