@@ -19,7 +19,6 @@ const ProjectList = () => {
     const viewMode = localStorage.getItem("sabuag-view-mode") || "grid";
     return viewMode == "list";
   });
-  const [activeTab, setActiveTab] = useState(1);
   const [openModal, setOpenModal] = useState(false);
 
   const handleToggleList = () => {
@@ -36,6 +35,7 @@ const ProjectList = () => {
     setOpenModal(false);
   };
   const handleCreateProject = () => setOpenModal(true);
+
   return (
     <div className="bg-white min-h-vh rounded-4 px-3 px-lg-5 pt-lg-4 pb-lg-4">
       <ProjectForm closeModal={closeModal} openModal={openModal} />
@@ -95,9 +95,6 @@ const ProjectList = () => {
             </p>
           </div>
           <PinnedProjects toggleList={toggleList} containerStyle="mb-2" />
-          {/* <div className="d-flex align-items-center justify-content-center justify-content-sm-start">
-            <TabsContainer activeTab={activeTab} setActiveTab={setActiveTab} />
-            </div> */}
           <p className="txt-primary4 fs-7 mb-2 fw-semibold">Recent Projects</p>
           <ProjectContainer toggleList={toggleList} />
         </div>

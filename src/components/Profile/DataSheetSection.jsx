@@ -5,7 +5,7 @@ import TextField from "../ui/TextField";
 
 import { useState, useRef } from "react";
 
-const CredentialSection = () => {
+const DataSheetSection = () => {
   const inputRef = useRef(null);
   const [readOnly, setReadOnly] = useState(true);
 
@@ -28,7 +28,7 @@ const CredentialSection = () => {
 
   return (
     <div className="profile-body px-3 px-md-5 py-3 py-md-4 rounded-bottom-4 bg-white shadow-sm w-100">
-      <div className="animation-opacity-fade">
+      <div className="fade-wrapper animation-opacity-fade">
         {/* HEAD  */}
         <div className="d-flex align-items-center justify-content-end">
           <button
@@ -48,13 +48,12 @@ const CredentialSection = () => {
         </div>
 
         {/* CREDENTIALS   */}
-        <p className="mb-3 text-secondary  fs-7 fw-semibold">Credentials</p>
+        <p className="mb-3 text-secondary  fs-7 fw-semibold">
+          Personal Data Sheet
+        </p>
         <div className="row px-2 mb-2 row-cols-1 row-cols-md-2">
           <div className="col px-1">
             <TextField readOnly={readOnly} value={20} label="Email" />
-          </div>
-          <div className="col px-1">
-            <TextField readOnly={readOnly} value={20} label="Contact #" />
           </div>
         </div>
         <p className="mb-3 text-secondary  fs-7 fw-semibold">Change Password</p>
@@ -74,4 +73,4 @@ const CredentialSection = () => {
   );
 };
 
-export default CredentialSection;
+export default DataSheetSection;

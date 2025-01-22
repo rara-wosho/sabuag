@@ -20,6 +20,7 @@ const AllRoutes = () => {
     <Routes>
       <Route path="/" element={<SignIn />} />
       <Route path="/join-us" element={<JoinUs />} />
+      <Route path="*" element={<PageNotFound />} />
 
       <Route element={<ProtectedRoutes />}>
         <Route path="/home" element={<DashboardLayout />}>
@@ -36,7 +37,6 @@ const AllRoutes = () => {
           <Route path="notifications" element={<Notifications />} />
         </Route>
       </Route>
-      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };

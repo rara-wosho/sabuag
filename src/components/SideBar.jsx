@@ -50,7 +50,7 @@ const SideBar = ({ activePage, setShowSidebar, showSidebar }) => {
           <Link to="profile">
             <div
               onClick={handleClick}
-              className="sidebar-item bg-body rounded-3"
+              className="sidebar-item bg-gray rounded-3"
             >
               <img
                 style={{ width: 40, height: 40, objectFit: "contain" }}

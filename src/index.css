@@ -5,6 +5,7 @@
   --bg-body: rgb(227, 237, 249);
   --bg-body2: rgb(232, 239, 247);
   --bg-body3: rgb(243, 247, 252);
+  --bg-gray: rgb(237, 237, 237);
   --bg-primary: #1a1752;
   --bg-primary2: #3d38a2;
   --bg-primary3: #555291;
@@ -47,7 +48,7 @@
   --sidebar-width-shrink: 99px;
 
   --border-shadow-color: rgba(0, 30, 151, 0.5);
-  --border-secondary: rgb(180, 180, 170);
+  --border-secondary: rgb(200, 200, 190);
   --border-black: rgb(225, 225, 225);
   --border-dark-black: rgb(200, 200, 200);
   --text-secondary: rgb(120, 120, 120);
@@ -63,6 +64,7 @@
 [data-theme="dark"] {
   --bg-body2: rgb(44, 61, 75);
   --bg-body: rgb(15, 18, 18);
+  --bg-gray: rgb(44, 61, 75);
   --bg-primary: #3a8bb3;
   --bg-primary2: #3a8bb3;
   --bg-primary3: #3a8bb3;
@@ -97,7 +99,7 @@
   --border-black: rgb(28, 56, 86);
   --border-dark-black: rgb(80, 80, 80);
 
-  --border-secondary: rgb(84, 99, 116);
+  --border-secondary: rgb(56, 69, 86);
   --text-secondary: rgb(170, 170, 170);
   --text-muted: rgb(185, 185, 185);
 
@@ -131,6 +133,9 @@ a {
   background-color: var(--bg-white) !important;
 }
 
+.bg-gray {
+  background-color: var(--bg-gray);
+}
 .bg-none {
   background-color: transparent !important;
 }
@@ -1117,6 +1122,20 @@ nav.navbar {
 .border-radius-right {
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
+}
+
+.animation-opacity-fade {
+  animation: opacity-fade 0.6s forwards;
+  opacity: o;
+}
+
+@keyframes opacity-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 /* MEDIA QUERIES ============================================================== */
 

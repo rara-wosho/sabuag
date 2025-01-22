@@ -19,7 +19,7 @@ const SignIn = () => {
         />
         <p className="txt-primary mb-0 fw-semibold fs-2 ms-1">SABUAG</p>
       </div>
-      <div className="row row-cols-1 row-cols-md-2 bg-white rounded-3 py-2 py-lg-3 px-2 px-lg-3 shadow">
+      <div className="row row-cols-1 row-cols-md-2 bg-white rounded-3 py-2 py-lg-3 px-2 px-lg-3 shadow-sm">
         <div className="col first-col bg-body2 px-4 d-none d-md-flex rounded-2 align-items-center justify-content-center flex-column">
           <div className="img-container">
             <img
@@ -84,12 +84,12 @@ const SignIn = () => {
           </div>
         </div>
       </div>
-      <div
+      <p
         // style={{ bottom: "1rem" }}
         className="mb-0 mt-4 text-muted fs-8"
       >
-        &copy;Israel De Vera@2025
-      </div>
+        Developed by: Israel De Vera
+      </p>
     </div>
   );
 };

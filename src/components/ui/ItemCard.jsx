@@ -10,7 +10,7 @@ function ItemCard() {
   return (
     <div
       onClick={() => handleClickItem(12)}
-      className="bg-body2 bg-hover pointer rounded-2 py-2 py-md-3 px-2 px-md-3 d-flex align-items-center"
+      className="bg-gray bg-hover pointer rounded-2 py-2 py-md-3 px-2 px-md-3 d-flex align-items-center"
     >
       <div className="item-info w-100 d-flex flex-column">
         <div className="d-flex txt-black mb-1 align-items-center">
