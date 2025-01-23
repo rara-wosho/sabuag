@@ -48,7 +48,7 @@ const ProfileSection = () => {
   //   );
 
   return (
-    <div className="animation-opacity-fade">
+    <div className="">
       {/* HEAD  */}
       <div className="d-flex align-items-center justify-content-end">
         <button

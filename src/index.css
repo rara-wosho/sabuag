@@ -592,7 +592,6 @@ nav.navbar {
 #secondary-btn {
   outline: none;
   border: 1px solid transparent;
-  font-size: 1rem;
   transition: all 0.2s;
   font-weight: 500;
 }

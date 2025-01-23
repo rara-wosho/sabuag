@@ -50,7 +50,7 @@ const DashboardLayout = () => {
         return "Task";
       case "reports":
         return "Reports";
-      case "member":
+      case "members":
         return "Members";
       default:
         return "Dashboard";
