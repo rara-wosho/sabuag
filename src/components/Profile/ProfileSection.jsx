@@ -40,15 +40,15 @@ const ProfileSection = () => {
     }, 1000);
   }, []);
 
-  if (isLoading)
-    return (
-      <div className="h-100 w-100 bg-white d-flex justify-content-center pt-5 text-muted">
-        Loading...
-      </div>
-    );
+  // if (isLoading)
+  //   return (
+  //     <div className="h-100 w-100 bg-white d-flex justify-content-center pt-5 text-muted">
+  //       Loading...
+  //     </div>
+  //   );
 
   return (
-    <div className="profile-body px-3 px-md-5 py-3 py-md-4 rounded-bottom-4 bg-white shadow-sm w-100">
+    <div className="animation-opacity-fade">
       {/* HEAD  */}
       <div className="d-flex align-items-center justify-content-end">
         <button
@@ -71,7 +71,7 @@ const ProfileSection = () => {
       <p className="mb-3 text-secondary  fs-7 fw-semibold">
         Personal Information
       </p>
-      <div className="row px-2 mb-2 animation-opacity-fade row-cols-1 row-cols-md-2">
+      <div className="row px-2 mb-2 row-cols-1 row-cols-md-2">
         <div className="col px-1">
           <TextField
             reference={inputRef}
@@ -108,7 +108,7 @@ const ProfileSection = () => {
       <p className="mb-3 text-secondary  fs-7 fw-semibold">
         Academic Information
       </p>
-      <div className="row px-2 mb-2 animation-opacity-fade row-cols-1 row-cols-md-2">
+      <div className="row px-2 mb-2 row-cols-1 row-cols-md-2">
         <div className="col px-1">
           <TextField readOnly={readOnly} value={20} label="Program" />
         </div>
@@ -121,7 +121,7 @@ const ProfileSection = () => {
       </div>
       {/* ADDRESS INFO  */}
       <p className="mb-3 text-secondary  fs-7 fw-semibold">Address</p>
-      <div className="row px-2 mb-2 animation-opacity-fade row-cols-1 row-cols-md-2">
+      <div className="row px-2 mb-2 row-cols-1 row-cols-md-2">
         <div className="col px-1">
           <TextField readOnly={readOnly} value={20} label="Street" />
         </div>

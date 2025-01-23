@@ -108,9 +108,11 @@ const Profile = () => {
             </div>
           </div>
 
-          {activeTab === "profile" && <ProfileSection />}
-          {activeTab === "credentials" && <CredentialSection />}
-          {activeTab === "data-sheet" && <DataSheetSection />}
+          <div className="profile-body px-3 px-md-5 py-3 py-md-4 rounded-bottom-4 bg-white shadow-sm w-100">
+            {activeTab === "profile" && <ProfileSection />}
+            {activeTab === "credentials" && <CredentialSection />}
+            {activeTab === "data-sheet" && <DataSheetSection />}
+          </div>
         </div>
 
         {/* RIGHT COL - activity logs */}

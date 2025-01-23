@@ -47,7 +47,7 @@
   --sidebar-width: 290px;
   --sidebar-width-shrink: 99px;
 
-  --border-shadow-color: rgba(0, 30, 151, 0.5);
+  --border-shadow-color: rgba(98, 150, 255, 0.5);
   --border-secondary: rgb(200, 200, 190);
   --border-black: rgb(225, 225, 225);
   --border-dark-black: rgb(200, 200, 200);
@@ -389,15 +389,14 @@ nav.navbar {
   position: absolute;
   left: 1.3rem;
   top: 0;
-}
-
-.sidebar .sidebar-category-label {
   transition: all 0.3s;
   opacity: 1;
 }
+
 .sidebar.shrink .sidebar-category-label {
   opacity: 0;
-  left: -2rem;
+  transform: scale(0);
+  left: -0.4rem;
 }
 
 .sidebar .category-border {
@@ -523,7 +522,7 @@ nav.navbar {
 .textfield-container textarea:not(:read-only):hover,
 .textfield-container select:not(:disabled):hover {
   border-color: var(--border-shadow-color);
-  box-shadow: 0 0 0 1px var(--border-shadow-color);
+  box-shadow: 0 0 0 2px var(--border-shadow-color);
 }
 
 .textfield-container .label {
