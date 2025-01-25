@@ -14,6 +14,7 @@ const TextField = ({
   reference,
   readOnly = false,
   options = [],
+  hasError = false,
 }) => {
   const [showPass, setShowPass] = useState(false);
 
@@ -76,7 +77,7 @@ const TextField = ({
           name={name}
           value={value}
           onChange={onChange}
-          className="px-3 text-muted"
+          className={`px-3 text-muted ${hasError && "error"}`}
           ref={reference}
           readOnly={readOnly}
         >
@@ -100,7 +101,7 @@ const TextField = ({
           value={value}
           rows={rows}
           placeholder={label}
-          className="px-3 text-muted py-3"
+          className={`px-3 text-muted py-3 ${hasError && "error"}`}
           onChange={onChange}
           onKeyDown={handleKeyDown}
           ref={reference}
@@ -111,7 +112,7 @@ const TextField = ({
           name={name}
           value={value}
           placeholder={label}
-          className={`input text-muted`}
+          className={`input text-muted ${hasError && "error"}`}
           type={type === "password" && !showPass ? "password" : "text"}
           onChange={onChange}
           readOnly={readOnly}

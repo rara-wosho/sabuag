@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function ItemCard() {
   const navigate = useNavigate();
   const handleClickItem = (itemID) => {
-    navigate(`${itemID}`);
+    navigate(`/home/item/${itemID}`);
   };
   return (
     <div

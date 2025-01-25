@@ -1,11 +1,11 @@
 import { FaRegBell } from "react-icons/fa";
 import { FiCalendar } from "react-icons/fi";
-import { FaRegMoon } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { HiMiniBars3BottomLeft } from "react-icons/hi2";
 import { FaFacebookF } from "react-icons/fa";
 import { MdOutlineMail } from "react-icons/md";
 import ToggleDarkmode from "../ui/ToggleDarkmode";
+import pic from "../../assets/images/meme.jpg";
 
 const DashboardHeader = ({ activePage, setShowSidebar, title }) => {
   return (
@@ -56,6 +56,14 @@ const DashboardHeader = ({ activePage, setShowSidebar, title }) => {
         <div className="dashboard-header-date text-white border ms-3 py-2 rounded-2 px-3 align-items-center shadow d-none d-md-flex">
           <FiCalendar />
           <div className="mb-0 ms-2 fs-7">12 / 23 / 2024</div>
+        </div>
+        <div className="profile-wrapper d-md-none d-flex center ms-2">
+          <img
+            style={{ width: 25, aspectRatio: 1 / 1, objectFit: "contain" }}
+            src={pic}
+            alt="profile"
+            className="rounded-circle shadow-sm"
+          />
         </div>
       </div>
     </div>

@@ -17,6 +17,10 @@ function Resources() {
     setCollectionForm((c) => !c);
   };
 
+  const clickCollection = (collectionID) => {
+    navigate("/home/collection-id/" + collectionID);
+  };
+
   return (
     <div className="bg-white min-h-vh rounded-4 px-3 pt-3 px-lg-5 pt-lg-4 pb-lg-4">
       {/* COLLECTION FORM  */}
@@ -34,65 +38,46 @@ function Resources() {
         </button>
         <p className="fs-7 ms-auto mb-0 text-muted">7 Collections</p>
       </div>
+
+      <SortingTab containerStyle="mb-3" />
       {resources.length > 0 ? (
-        <>
-          <div className="row px-2 px-md-2 row-cols-2 row-cols-md-4 row-cols-lg-6">
-            <div className="col mb-2 px-1">
-              <CollectionCard color="blue" title="Images" />
-            </div>
-            <div className="col mb-2 px-1">
-              <CollectionCard color="green" title="Captions" />
-            </div>
-            <div className="col mb-2 px-1">
-              <CollectionCard color="pink" title="Articles" />
-            </div>
-            <div className="col mb-2 px-1">
-              <CollectionCard color="pink" title="Links" />
-            </div>
+        <div className="row px-2 px-md-2 row-cols-2 row-cols-md-4 row-cols-lg-6">
+          <div className="col mb-2 px-1">
+            <CollectionCard
+              handlePress={() => clickCollection(12)}
+              color="pink"
+              title="valentines 2025"
+            />
           </div>
-          {/* COLLECTION CONTENT */}
-          <div className="collection-content py-3">
-            <div className="d-flex align-items-center">
-              <h4 className="text-muted fw-medium normal-text-size mb-0">
-                Rens patricks projects
-              </h4>
-              <button
-                onClick={() => navigate("/home/add-item/12")}
-                className="btn pointer ms-auto ps-2 shadow-none btn-sm btn-outline-secondary d-flex align-items-center"
-              >
-                <FiPlus /> New Item
-              </button>
-            </div>
-            <div className="row row-reverse align-items-center py-2 mb-2 w-100 mx-auto row-cols-1 row-cols-md-2">
-              <div className="col mb-2 mb-md-0   px-0">
-                <SearchbarOutline placeholder="search items" />
-              </div>
-              <div className="col px-0 d-flex align-items-center justify-content-start justify-content-md-end">
-                <SortingTab />
-              </div>
-            </div>
-            <div className="row px-2 px-md-2 row-cols-1 row-cols-md-2 row-cols-lg-3">
-              <div className="col mb-2 px-1">
-                <ItemCard />
-              </div>
-              <div className="col mb-2 px-1">
-                <ItemCard />
-              </div>
-              <div className="col mb-2 px-1">
-                <ItemCard />
-              </div>
-              <div className="col mb-2 px-1">
-                <ItemCard />
-              </div>
-              <div className="col mb-2 px-1">
-                <ItemCard />
-              </div>
-              <div className="col mb-2 px-1">
-                <ItemCard />
-              </div>
-            </div>
+          <div className="col mb-2 px-1">
+            <CollectionCard
+              handlePress={() => clickCollection(12)}
+              color="blue"
+              title="Images"
+            />
           </div>
-        </>
+          <div className="col mb-2 px-1">
+            <CollectionCard
+              handlePress={() => clickCollection(12)}
+              color="green"
+              title="Captions"
+            />
+          </div>
+          <div className="col mb-2 px-1">
+            <CollectionCard
+              handlePress={() => clickCollection(12)}
+              color="pink"
+              title="Articles"
+            />
+          </div>
+          <div className="col mb-2 px-1">
+            <CollectionCard
+              handlePress={() => clickCollection(12)}
+              color="pink"
+              title="Links"
+            />
+          </div>
+        </div>
       ) : (
         <div className="d-flex center border p-3"></div>
       )}

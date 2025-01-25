@@ -99,7 +99,7 @@
   --border-black: rgb(28, 56, 86);
   --border-dark-black: rgb(80, 80, 80);
 
-  --border-secondary: rgb(56, 69, 86);
+  --border-secondary: rgb(49, 62, 78);
   --text-secondary: rgb(170, 170, 170);
   --text-muted: rgb(185, 185, 185);
 
@@ -377,7 +377,7 @@ nav.navbar {
   align-items: start;
 }
 .sidebar.shrink .sidebar-label {
-  display: none !important;
+  display: none;
 }
 
 .sidebar.shrink .sidebar-toggler {
@@ -403,7 +403,7 @@ nav.navbar {
   padding-top: 2.2rem;
   transition: all 0.3s;
 }
-.sidebar.sidebar.shrink .category-border {
+.sidebar.shrink .category-border {
   padding-top: 0.5rem;
 }
 .sidebar-toggler {
@@ -417,7 +417,7 @@ nav.navbar {
   padding-inline: 10px;
   cursor: pointer;
   transition: all 0.3s;
-  overflow: hidden;
+  /* overflow: hidden; */
   position: relative;
   isolation: isolate;
 }
@@ -461,6 +461,8 @@ nav.navbar {
   margin-left: 8px;
   font-size: 0.95rem;
   font-weight: 500;
+  display: flex;
+  align-items: center;
 }
 .sidebar-item.active .sidebar-label {
   color: var(--txt-white);
@@ -543,6 +545,15 @@ nav.navbar {
   font-size: 0.7rem;
   background-color: var(--bg-white);
   border-radius: 4px;
+}
+
+.textfield-container input.error,
+.textfield-container input.error + label,
+.textfield-container select.error,
+.textfield-container textarea.error {
+  border-color: var(--txt-danger);
+  color: var(--txt-danger) !important;
+  background-color: rgba(230, 48, 48, 0.03);
 }
 
 .tabs-container .tab {
@@ -1285,11 +1296,62 @@ nav.navbar {
   .normal-text-size {
     font-size: 1rem;
   }
+
+  .sidebar.shrink .sidebar-item:hover .sidebar-label {
+    display: inline-block !important;
+    position: absolute;
+    top: 50%;
+    padding-inline: 12px;
+    left: 3.7rem;
+    font-size: 0.8rem;
+    padding-block: 4px;
+    border-radius: 4px;
+    transform: translateY(-50%);
+    animation: slide-left 0.3s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    background: var(--bg-body2);
+    color: var(--txt-black);
+    font-size: 0.8rem;
+  }
+
+  @keyframes slide-left {
+    from {
+      opacity: 0;
+      left: 2.6rem;
+    }
+  }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
   /* Styles for extra large devices */
+  .sidebar.shrink .sidebar-item:hover .sidebar-label {
+    display: inline-block !important;
+    position: absolute;
+    top: 50%;
+    padding-inline: 12px;
+    left: 3.7rem;
+    padding-block: 4px;
+    border-radius: 4px;
+    transform: translateY(-50%);
+    animation: slide-left 0.3s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    background: var(--bg-body2);
+    color: var(--txt-black);
+    font-size: 0.8rem;
+  }
+
+  @keyframes slide-left {
+    from {
+      opacity: 0;
+      left: 2.6rem;
+    }
+  }
+
+  .sidebar.shrink {
+    overflow-x: visible;
+  }
+
   .dashboard-header-label {
     font-size: 1.3rem;
   }

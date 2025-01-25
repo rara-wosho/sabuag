@@ -15,6 +15,7 @@ import CollectionItem from "../pages/DashboardLayout/CollectionItem";
 import AddItem from "../pages/DashboardLayout/AddItem";
 import JoinUs from "../pages/auth/JoinUs";
 import Members from "../pages/DashboardLayout/Members";
+import CollectionPage from "../pages/DashboardLayout/CollectionPage";
 
 const AllRoutes = () => {
   return (
@@ -31,7 +32,11 @@ const AllRoutes = () => {
           <Route path="task/:taskID" element={<Task />} />
           <Route path="projects" element={<ProjectList />} />
           <Route path="collections" element={<Resources />} />
-          <Route path="collections/:itemID" element={<CollectionItem />} />
+          <Route
+            path="collection-id/:collectionID"
+            element={<CollectionPage />}
+          />
+          <Route path="item/:itemID" element={<CollectionItem />} />
           <Route path="add-item/:collectionID" element={<AddItem />} />
           <Route path="profile" element={<Profile />} />
           <Route path="members" element={<Members />} />

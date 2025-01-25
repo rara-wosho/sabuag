@@ -25,7 +25,7 @@ const SideBar = ({ activePage, setShowSidebar, showSidebar }) => {
       >
         {/* Header */}
         <div className="sidebar-header d-flex align-items-center justify-content-between w-100 py-2">
-          <div className="sidebar-label ps-2 d-flex align-items-center">
+          <div className="sidebar-label ps-2">
             <div
               className="icon-container d-flex justify-content-center"
               style={{ width: 40, height: 40 }}
@@ -58,7 +58,7 @@ const SideBar = ({ activePage, setShowSidebar, showSidebar }) => {
                 src={pic}
                 alt="user account"
               />
-              <div className="sidebar-user-info ps-2 sidebar-label">
+              <div className="sidebar-user-info ps-2 sidebar-label flex-column align-items-start">
                 <h5 className="txt-primary fs-6 mb-0">Rael De Vera</h5>
                 <p className="mb-0 txt-nowrap text-secondary fs-7">
                   Editorial Cartoonist

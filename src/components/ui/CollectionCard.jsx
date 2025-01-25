@@ -1,8 +1,9 @@
 import { SlOptionsVertical } from "react-icons/sl";
 
-function CollectionCard({ color, title }) {
+function CollectionCard({ color, title, handlePress }) {
   return (
     <div
+      onClick={handlePress}
       className={`collection-card ${color} d-flex align-items-center justify-content-between rounded-2 fs-7 ps-2 pe-1 py-2`}
     >
       <p className="mb-0 text-truncate fw-medium">{title}</p>

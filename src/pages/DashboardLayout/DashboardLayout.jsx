@@ -44,6 +44,10 @@ const DashboardLayout = () => {
         return "Projects";
       case "collections":
         return "Collections";
+      case "collection-id":
+        return "Collection";
+      case "item":
+        return "Item";
       case "add-item":
         return "New Item";
       case "task":
@@ -74,7 +78,9 @@ const DashboardLayout = () => {
       </div>
       {/* SIDEBAR */}
       <SideBar
-        activePage={locationName}
+        activePage={
+          locationName === "collection-id" ? "collections" : locationName
+        }
         showSidebar={showSidebar}
         setShowSidebar={setShowSidebar}
       />
