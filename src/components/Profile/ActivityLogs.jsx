@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ActivityCard from "./ActivityCard";
 
-import empty from "../../assets/images/empty-pana.png";
+import empty from "../../assets/images/Empty-pana.png";
 
 const ActivityLogs = () => {
   const [logs, setLogs] = useState([]);
