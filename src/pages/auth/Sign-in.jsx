@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import SecondaryButton from "../../components/ui/SecondaryButton";
-import ToggleDarkMode from "../../components/ui/ToggleDarkMode";
+import ToggleDarkMode from "../../components/ui/ToggleDarkmode";
+
 import TextField from "../../components/ui/TextField";
 import { Snackbar, Alert } from "@mui/material";
 
