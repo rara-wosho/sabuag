@@ -32,50 +32,45 @@ const SignIn = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
   const handleRegister = () => {
-    setIsLoading(true);
-
-    createUserWithEmailAndPassword(auth, formData.email, formData.password)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        // ...
-        console.log(user);
-        console.log("user id: " + user.uid);
-        setIsLoading(false);
-        setFormData({ email: "", password: "" });
-
-        setWarning((prev) => ({
-          ...prev,
-          status: true,
-          message: "Successfully signed in",
-          variant: "success",
-        }));
-
-        setTimeout(() => {
-          setWarning({ status: false, message: "" });
-        }, 3000);
-
-        navigate("home");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        console.log("warning : " + error.message);
-
-        if (error.message === "Firebase: Error (auth/email-already-in-use).") {
-          setWarning((prev) => ({
-            ...prev,
-            status: true,
-            message: "Email is already in use",
-            variant: "warning",
-          }));
-
-          setTimeout(() => {
-            setWarning({ status: false, message: "" });
-          }, 3000);
-        }
-        setIsLoading(false);
-        // ..
-      });
+    navigate("/home");
+    // setIsLoading(true);
+    // createUserWithEmailAndPassword(auth, formData.email, formData.password)
+    //   .then((userCredential) => {
+    //     // Signed up
+    //     const user = userCredential.user;
+    //     // ...
+    //     console.log(user);
+    //     console.log("user id: " + user.uid);
+    //     setIsLoading(false);
+    //     setFormData({ email: "", password: "" });
+    //     setWarning((prev) => ({
+    //       ...prev,
+    //       status: true,
+    //       message: "Successfully signed in",
+    //       variant: "success",
+    //     }));
+    //     setTimeout(() => {
+    //       setWarning({ status: false, message: "" });
+    //     }, 3000);
+    //     navigate("home");
+    //   })
+    //   .catch((error) => {
+    //     const errorCode = error.code;
+    //     console.log("warning : " + error.message);
+    //     if (error.message === "Firebase: Error (auth/email-already-in-use).") {
+    //       setWarning((prev) => ({
+    //         ...prev,
+    //         status: true,
+    //         message: "Email is already in use",
+    //         variant: "warning",
+    //       }));
+    //       setTimeout(() => {
+    //         setWarning({ status: false, message: "" });
+    //       }, 3000);
+    //     }
+    //     setIsLoading(false);
+    //     // ..
+    //   });
   };
 
   return (
