@@ -4,7 +4,7 @@ function MytaskCard() {
   const navigate = useNavigate();
 
   const handleClick = (id) => {
-    navigate("/home//task/" + id);
+    navigate("/home/task/" + id);
   };
   return (
     <div onClick={() => handleClick(12)} className="mytask-card bg-hover">

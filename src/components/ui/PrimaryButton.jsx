@@ -1,13 +1,27 @@
-import React from "react";
-
-const PrimaryButton = ({ label, handlePress, containerStyle, isLoading }) => {
+const PrimaryButton = ({
+  label,
+  handlePress,
+  containerStyle,
+  disabled = false,
+  isLoading = false,
+}) => {
   return (
     <button
+      disabled={isLoading || disabled}
       id="primary-btn"
       onClick={handlePress}
-      className={`${containerStyle} bg-primary-linear`}
+      className={`${containerStyle} bg-primary-linear  ${
+        (disabled || isLoading) && "opacity-50"
+      }`}
     >
-      {label}
+      {isLoading ? (
+        <div
+          className="spinner-border text-white spinner-border-sm"
+          role="status"
+        ></div>
+      ) : (
+        label
+      )}
     </button>
   );
 };

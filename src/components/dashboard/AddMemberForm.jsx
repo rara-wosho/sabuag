@@ -14,7 +14,6 @@ const AddMemberForm = ({ formData, setFormData, formType, errors }) => {
     }));
   };
 
-  console.log(formData);
   return (
     <>
       <p className="mb-3 text-secondary fs-7">Credentials</p>

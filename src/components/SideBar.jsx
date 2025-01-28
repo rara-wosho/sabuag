@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { menuItems } from "../constants/sidebarItems";
 import sabuag from "../assets/logos/official-sabuag.png";
 import pic from "../assets/images/meme.jpg";
@@ -7,9 +7,29 @@ import pic from "../assets/images/meme.jpg";
 import { LuLogOut } from "react-icons/lu";
 import { FaRegSquareCaretLeft } from "react-icons/fa6";
 
-const SideBar = ({ activePage, setShowSidebar, showSidebar }) => {
+// FIREBASE
+import { auth } from "../firebase/firebaseConfig";
+import { useState } from "react";
+
+const SideBar = ({ activePage, setShowSidebar, showSidebar, user }) => {
+  const navigate = useNavigate();
+  const [logoutLoading, setLogoutLoading] = useState(false);
+
   const handleClick = () => {
     if (window.innerWidth < 992) setShowSidebar(false);
+  };
+
+  const handleLogout = async () => {
+    setLogoutLoading(true);
+    try {
+      await auth.signOut();
+      navigate("/");
+      console.log("logged out successfully");
+    } catch (error) {
+      console.log("logged out error");
+    } finally {
+      setLogoutLoading(false);
+    }
   };
 
   return (
@@ -58,10 +78,12 @@ const SideBar = ({ activePage, setShowSidebar, showSidebar }) => {
                 src={pic}
                 alt="user account"
               />
-              <div className="sidebar-user-info ps-2 sidebar-label flex-column align-items-start">
-                <h5 className="txt-primary fs-6 mb-0">Rael De Vera</h5>
+              <div className="sidebar-user-info ps-2 sidebar-label flex-column align-items-start overflow-hidden">
+                <h5 className="txt-primary txt-nowrap fs-6 mb-0">
+                  {user.firstName + " " + user.lastName}
+                </h5>
                 <p className="mb-0 txt-nowrap text-secondary fs-7">
-                  Editorial Cartoonist
+                  {user.position}
                 </p>
               </div>
             </div>
@@ -82,7 +104,7 @@ const SideBar = ({ activePage, setShowSidebar, showSidebar }) => {
               {category.items.map((item) => (
                 <Link key={item.id} to={item.path}>
                   <div
-                    onClick={() => handleClick(item.id)}
+                    onClick={handleClick}
                     className={`sidebar-item rounded-3 ${
                       activePage === item.id ? "active shadow" : ""
                     }`}
@@ -98,11 +120,14 @@ const SideBar = ({ activePage, setShowSidebar, showSidebar }) => {
 
         {/* SIDEBAR Footer */}
         <div className="sidebar-footer border-top pt-2">
-          <div className="sidebar-item rounded-3">
+          <div onClick={handleLogout} className="sidebar-item rounded-3">
             <div className="icon-container text-danger">
               <LuLogOut size={22} />
             </div>
             <p className="mb-0 sidebar-label text-danger">Logout</p>
+            {logoutLoading && (
+              <div className="spinner-border text-danger spinner-border-sm ms-2"></div>
+            )}
           </div>
         </div>
       </div>

@@ -1,29 +1,36 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import SecondaryButton from "../../components/ui/SecondaryButton";
 import ToggleDarkMode from "../../components/ui/ToggleDarkmode";
 
 import TextField from "../../components/ui/TextField";
 import { Snackbar, Alert } from "@mui/material";
-
 import { MdOutlineMail, MdOutlineLock } from "react-icons/md";
 
 import { useState } from "react";
+import { useAuth } from "../../hooks/AuthProvider";
 
 // FIREBASE
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignIn = () => {
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [warning, setWarning] = useState({
     status: false,
     message: "",
     variant: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+  });
+
+  const [errors, setErrors] = useState({
+    email: false,
+    password: false,
   });
 
   const handleChange = (e) => {
@@ -31,47 +38,60 @@ const SignIn = () => {
 
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  const handleRegister = () => {
-    navigate("/home");
-    // setIsLoading(true);
-    // createUserWithEmailAndPassword(auth, formData.email, formData.password)
-    //   .then((userCredential) => {
-    //     // Signed up
-    //     const user = userCredential.user;
-    //     // ...
-    //     console.log(user);
-    //     console.log("user id: " + user.uid);
-    //     setIsLoading(false);
-    //     setFormData({ email: "", password: "" });
-    //     setWarning((prev) => ({
-    //       ...prev,
-    //       status: true,
-    //       message: "Successfully signed in",
-    //       variant: "success",
-    //     }));
-    //     setTimeout(() => {
-    //       setWarning({ status: false, message: "" });
-    //     }, 3000);
-    //     navigate("home");
-    //   })
-    //   .catch((error) => {
-    //     const errorCode = error.code;
-    //     console.log("warning : " + error.message);
-    //     if (error.message === "Firebase: Error (auth/email-already-in-use).") {
-    //       setWarning((prev) => ({
-    //         ...prev,
-    //         status: true,
-    //         message: "Email is already in use",
-    //         variant: "warning",
-    //       }));
-    //       setTimeout(() => {
-    //         setWarning({ status: false, message: "" });
-    //       }, 3000);
-    //     }
-    //     setIsLoading(false);
-    //     // ..
-    //   });
+
+  const handleSignIn = async () => {
+    const newErrors = {};
+
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = true;
+    }
+    if (!formData.password) {
+      newErrors.password = true;
+    }
+
+    const hasError = Object.keys(newErrors).length > 0;
+    setErrors((prev) => ({ ...prev, ...newErrors }));
+
+    if (!hasError) {
+    }
+    if (!hasError) {
+      setIsLoading(true);
+      signInWithEmailAndPassword(auth, formData.email, formData.password)
+        .then((userCred) => {
+          setIsLoading(false);
+          navigate("/home");
+        })
+        .catch((error) => {
+          if (error.code === "auth/invalid-credential.") {
+            setWarning((prev) => ({
+              ...prev,
+              status: true,
+              message: "Invalid Credentials",
+              variant: "error",
+            }));
+            setTimeout(() => {
+              setWarning({ status: false, message: "" });
+            }, 3000);
+          }
+
+          setIsLoading(false);
+        });
+    } else {
+      setTimeout(() => {
+        setErrors({ email: false, password: false });
+      }, 2000);
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="d-flex center bg-white min-h-vh p-2">
+        <div className="spinner-border text-muted" role="status"></div>
+      </div>
+    );
+  }
+
+  if (user) return <Navigate to="/home" replace />;
 
   return (
     <div className="sign-in-page p-3">
@@ -124,6 +144,7 @@ const SignIn = () => {
             </p>
             <div className="auth-form w-100">
               <TextField
+                hasError={errors.email}
                 label="Email"
                 containerStyle="bg-white"
                 icon={<MdOutlineMail />}
@@ -134,6 +155,7 @@ const SignIn = () => {
               />
               <TextField
                 icon={<MdOutlineLock />}
+                hasError={errors.password}
                 label="Password"
                 type="password"
                 containerStyle="bg-white"
@@ -164,7 +186,7 @@ const SignIn = () => {
               <SecondaryButton
                 containerStyle="w-100 text-white mb-4 py-2 rounded-3 shadow-sm"
                 label="Sign In"
-                handlePress={handleRegister}
+                handlePress={handleSignIn}
                 isLoading={isLoading}
               />
 

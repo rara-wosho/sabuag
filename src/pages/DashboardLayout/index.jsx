@@ -1,8 +1,6 @@
 import Announcement from "../../components/dashboard/Announcement";
 import OverviewCards from "../../components/dashboard/OverviewCards";
 import MemberWidget from "../../components/dashboard/MemberWidget";
-import { PieChart } from "@mui/x-charts/PieChart";
-import TopContributors from "../../components/dashboard/TopContributors";
 
 const Dashboard = () => {
   return (

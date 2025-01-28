@@ -59,7 +59,7 @@ const DashboardHeader = ({ activePage, setShowSidebar, title }) => {
         </div>
         <div className="profile-wrapper d-md-none d-flex center ms-2">
           <img
-            style={{ width: 25, aspectRatio: 1 / 1, objectFit: "contain" }}
+            style={{ width: 28, aspectRatio: 1 / 1, objectFit: "contain" }}
             src={pic}
             alt="profile"
             className="rounded-circle shadow-sm"
