@@ -1,19 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiPlus } from "react-icons/fi";
-
 import CollectionCard from "../../components/ui/CollectionCard";
-import ItemCard from "../../components/ui/ItemCard";
 import SortingTab from "../../components/ui/SortingTab";
-import SearchbarOutline from "../../components/ui/SearchbarOutline";
 import CollectionForm from "../../components/collections/CollectionForm";
+import Skeleton from "../../components/ui/Skeleton";
 import { useNavigate } from "react-router-dom";
 
-function Resources() {
-  const [resources, setResources] = useState([1]);
-  const [collectionForm, setCollectionForm] = useState(false);
-  const navigate = useNavigate();
+// FIREBASE
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
+import { useAuth } from "../../hooks/AuthProvider";
 
-  const toggleCollection = () => {
+function Resources() {
+  const { userDetails } = useAuth();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [resources, setResources] = useState([]);
+  const [collectionForm, setCollectionForm] = useState(false);
+  const [editingCollection, setEditingCollection] = useState(null); // State for editing
+
+  const toggleCollection = (collection = null) => {
+    setEditingCollection(collection); // Set the collection to edit (or null for adding)
     setCollectionForm((c) => !c);
   };
 
@@ -21,65 +28,84 @@ function Resources() {
     navigate("/home/collection-id/" + collectionID);
   };
 
+  // FETCH COLLECTIONS
+  const fetchCollections = async () => {
+    const q = query(
+      collection(db, "Collections"),
+      orderBy("createdAt", "desc")
+    );
+
+    try {
+      const querySnapshot = await getDocs(q);
+      const collections = [];
+      querySnapshot.forEach((doc) => {
+        collections.push({ id: doc.id, ...doc.data() });
+      });
+      setResources(collections);
+    } catch (error) {
+      console.error("Error fetching collections: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // FETCH COLLECTIONS ON COMPONENT MOUNT
+  useEffect(() => {
+    fetchCollections();
+  }, []);
+
   return (
     <div className="bg-white min-h-vh rounded-4 px-3 pt-3 px-lg-5 pt-lg-4 pb-lg-4">
       {/* COLLECTION FORM  */}
       <CollectionForm
+        userDetails={userDetails}
         toggleCollectionForm={toggleCollection}
         open={collectionForm}
+        editingCollection={editingCollection} // Pass the collection to edit
+        fetchCollections={fetchCollections} // Pass the fetch function to refresh the list
       />
 
       <div className="project-header pb-2 mb-2 align-items-center rounded-3 pt-2 pb-2 position-relative d-flex">
         <button
-          onClick={toggleCollection}
+          onClick={() => toggleCollection()} // Open form for adding a new collection
           className="btn d-flex align-items-center btn-sm btn-outline-secondary shadow-none"
         >
           <FiPlus /> New Collection
         </button>
-        <p className="fs-7 ms-auto mb-0 text-muted">7 Collections</p>
+
+        <p className="fs-7 ms-auto mb-0 text-muted">
+          {resources.length} Collections
+        </p>
       </div>
 
       <SortingTab containerStyle="mb-3" />
-      {resources.length > 0 ? (
+
+      {loading ? (
         <div className="row px-2 px-md-2 row-cols-2 row-cols-md-4 row-cols-lg-6">
-          <div className="col mb-2 px-1">
-            <CollectionCard
-              handlePress={() => clickCollection(12)}
-              color="pink"
-              title="valentines 2025"
-            />
-          </div>
-          <div className="col mb-2 px-1">
-            <CollectionCard
-              handlePress={() => clickCollection(12)}
-              color="blue"
-              title="Images"
-            />
-          </div>
-          <div className="col mb-2 px-1">
-            <CollectionCard
-              handlePress={() => clickCollection(12)}
-              color="green"
-              title="Captions"
-            />
-          </div>
-          <div className="col mb-2 px-1">
-            <CollectionCard
-              handlePress={() => clickCollection(12)}
-              color="pink"
-              title="Articles"
-            />
-          </div>
-          <div className="col mb-2 px-1">
-            <CollectionCard
-              handlePress={() => clickCollection(12)}
-              color="pink"
-              title="Links"
-            />
-          </div>
+          {[...Array(5)].map((_, index) => (
+            <div className="col mb-2 px-1" key={index}>
+              <Skeleton width="100%" height={39} />
+            </div>
+          ))}
+        </div>
+      ) : resources.length > 0 ? (
+        <div className="row px-2 px-md-2 row-cols-2 row-cols-md-4 row-cols-lg-6">
+          {resources.map((collection) => (
+            <div className="col mb-2 px-1" key={collection.id}>
+              <CollectionCard
+                handlePress={() => clickCollection(collection.id)}
+                color={collection.color || "default"}
+                title={collection.title}
+                creatorID={collection.creatorID}
+                toggleCollection={() => toggleCollection(collection)} // Open form for editing
+              />
+            </div>
+          ))}
         </div>
       ) : (
-        <div className="d-flex center border p-3"></div>
+        <div className="d-flex center p-2">
+          <p className="text-secondary">No collections found.</p>
+        </div>
       )}
     </div>
   );

@@ -1,29 +1,90 @@
 import { Dialog } from "@mui/material";
 import TextField from "../ui/TextField";
 import PrimaryButton from "../ui/PrimaryButton";
+import { MdDeleteOutline } from "react-icons/md";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
-const CollectionForm = ({ open, toggleCollectionForm }) => {
+// FIREBASE
+import {
+  addDoc,
+  collection,
+  doc,
+  updateDoc,
+  serverTimestamp,
+  deleteDoc,
+} from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
+
+const CollectionForm = ({
+  open,
+  toggleCollectionForm,
+  editingCollection,
+  fetchCollections,
+  userDetails,
+}) => {
+  // feedbacks
+  const [disabled, setDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
   const [collectionData, setCollectionData] = useState({
     title: "",
     color: "default",
+    creatorID: "",
+    creatorName: "",
   });
+
+  const resetCollectionData = () => {
+    setCollectionData({
+      title: "",
+      color: "default",
+      creatorID: "",
+      creatorName: "",
+    });
+  };
+
+  // Populate form fields if editing
+  useEffect(() => {
+    if (editingCollection) {
+      setCollectionData({
+        title: editingCollection.title,
+        color: editingCollection.color || "default",
+        creatorID: editingCollection.creatorID,
+        creatorName: editingCollection.creatorName,
+      });
+    } else {
+      setCollectionData({
+        title: "",
+        color: "default",
+        creatorID: userDetails.userID,
+        creatorName: userDetails.firstName,
+      });
+    }
+  }, [editingCollection]);
 
   const handleTitle = useCallback((e) => {
     const title = e.target.value;
     if (title.length <= 20) {
       setCollectionData((c) => ({ ...c, title }));
     }
+
+    if (title.length > 0) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
   }, []);
 
   const pickColor = useCallback((e) => {
     setCollectionData((c) => ({ ...c, color: e.target.value }));
+    setDisabled(false);
   }, []);
 
   const handleCancel = () => {
-    setCollectionData({ title: "", color: "default" });
+    resetCollectionData();
     toggleCollectionForm();
+    setDisabled(true);
   };
 
   const colors = [
@@ -35,12 +96,54 @@ const CollectionForm = ({ open, toggleCollectionForm }) => {
     "green",
     "orange",
   ];
+
+  const handleSubmit = async () => {
+    setLoading(true);
+
+    try {
+      if (editingCollection) {
+        // Update existing collection
+        await updateDoc(doc(db, "Collections", editingCollection.id), {
+          ...collectionData,
+          updatedAt: serverTimestamp(),
+        });
+      } else {
+        // Add new collection
+        await addDoc(collection(db, "Collections"), {
+          ...collectionData,
+          createdAt: serverTimestamp(),
+        });
+      }
+
+      resetCollectionData();
+      fetchCollections(); // Refresh the collections list
+      toggleCollectionForm(); // Close the form
+    } catch (err) {
+      console.log("error : ", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteCollection = async (collectionID) => {
+    setDeleteLoading(true);
+    try {
+      await deleteDoc(doc(db, "Collections", collectionID));
+      console.log("deleted doc success");
+      fetchCollections();
+      toggleCollectionForm();
+    } catch (err) {
+      console.log("delete doc error");
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
   return (
     <Dialog
       PaperProps={{
         sx: {
           width: "100%",
-          maxWidth: 600, // Control the width
+          maxWidth: 600,
           borderRadius: 3,
           margin: 1,
         },
@@ -49,10 +152,21 @@ const CollectionForm = ({ open, toggleCollectionForm }) => {
       onClose={toggleCollectionForm}
     >
       <div className="collection-form py-3 px-3 p-md-4 bg-white-linear rounded-3 w-100">
-        <div className="colllection-form-header mb-2">
+        <div className="colllection-form-header mb-3 d-flex align-items-center">
           <p className="project-form-0 mb-0 fs-5 txt-primary3 fw-semibold">
-            New Collection
+            {editingCollection ? "Edit Collection" : "New Collection"}
           </p>
+
+          {editingCollection &&
+            (deleteLoading ? (
+              <div className="spinner-border spinner-border-sm text-danger ms-auto"></div>
+            ) : (
+              <MdDeleteOutline
+                onClick={() => deleteCollection(editingCollection.id)}
+                className="text-danger ms-auto pointer"
+                size={26}
+              />
+            ))}
         </div>
         <div className="collection-form-body">
           <TextField
@@ -61,6 +175,14 @@ const CollectionForm = ({ open, toggleCollectionForm }) => {
             onChange={handleTitle}
             showCount
           />
+
+          {(userDetails.role === "superadmin" ||
+            userDetails.role === "admin" ||
+            userDetails.userID === collectionData.creatorID) && (
+            <p className="text-muted mb-3 fw-medium fs-8">
+              By : {collectionData.creatorName}
+            </p>
+          )}
 
           <p className="text-muted mb-2 fw-medium fs-7">
             Color: {collectionData.color}
@@ -81,6 +203,7 @@ const CollectionForm = ({ open, toggleCollectionForm }) => {
                   type="radio"
                   name="color"
                   value={color}
+                  checked={collectionData.color === color}
                 />
               </label>
             ))}
@@ -95,7 +218,10 @@ const CollectionForm = ({ open, toggleCollectionForm }) => {
           </button>
           <PrimaryButton
             containerStyle="py-2 px-3 w-100 px-lg-4 rounded-2"
-            label="Add Now"
+            label={editingCollection ? "Update" : "Add Now"}
+            disabled={disabled}
+            handlePress={handleSubmit}
+            isLoading={loading}
           />
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import SecondaryButton from "../../components/ui/SecondaryButton";
 import ToggleDarkMode from "../../components/ui/ToggleDarkmode";
+import Loader from "../../components/ui/Loader";
 
 import TextField from "../../components/ui/TextField";
 import { Snackbar, Alert } from "@mui/material";
@@ -86,7 +87,7 @@ const SignIn = () => {
   if (loading) {
     return (
       <div className="d-flex center bg-white min-h-vh p-2">
-        <div className="spinner-border text-muted" role="status"></div>
+        <Loader />
       </div>
     );
   }

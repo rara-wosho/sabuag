@@ -950,6 +950,7 @@ nav.navbar {
 
 .collection-card.default {
   border-color: var(--border-dark-black);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 .collection-card.blue {
   border-color: hsla(221, 68%, 63%, 0.5);

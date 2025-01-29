@@ -2,6 +2,7 @@ import { FiEdit3 } from "react-icons/fi";
 import { FaCheck } from "react-icons/fa6";
 
 import TextField from "../ui/TextField";
+import Skeleton from "../ui/Skeleton";
 
 import { useState, useRef, useEffect } from "react";
 
@@ -37,15 +38,19 @@ const ProfileSection = () => {
     // get profile data simulation
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 5000);
   }, []);
 
-  // if (isLoading)
-  //   return (
-  //     <div className="h-100 w-100 bg-white d-flex justify-content-center pt-5 text-muted">
-  //       Loading...
-  //     </div>
-  //   );
+  if (isLoading)
+    return (
+      <div className="h-100 w-100">
+        <Skeleton width="100%" height={40} marginBottom={1} />
+        <Skeleton width="100%" height={40} marginBottom={1} />
+        <Skeleton width="100%" height={40} marginBottom={1} />
+        <Skeleton width="100%" height={40} marginBottom={1} />
+        <Skeleton width="100%" height={40} marginBottom={1} />
+      </div>
+    );
 
   return (
     <div className="">
