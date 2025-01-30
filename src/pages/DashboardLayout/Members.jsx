@@ -11,8 +11,13 @@ import MemberRow from "../../components/members/MemberRow";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useAuth } from "../../hooks/AuthProvider";
 
 const Members = () => {
+  const { userDetails } = useAuth();
+  setTimeout(() => {
+    console.log("user ID : ", userDetails.password);
+  }, 1000);
   // DATA TO RENDER
   const [members, setMembers] = useState([1, 2, 3]);
 

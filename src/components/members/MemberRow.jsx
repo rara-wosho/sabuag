@@ -7,7 +7,7 @@ const MemberRow = ({ members, setMembers }) => {
 
       {members.length > 0 &&
         members.map((member) => {
-          return <div className="col px-1 py-2 border"></div>;
+          return <div key={member} className="col px-1 py-2 border"></div>;
         })}
     </div>
   );

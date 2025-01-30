@@ -7,7 +7,13 @@ import Skeleton from "../../components/ui/Skeleton";
 import { useNavigate } from "react-router-dom";
 
 // FIREBASE
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import { useAuth } from "../../hooks/AuthProvider";
 
@@ -29,29 +35,39 @@ function Resources() {
   };
 
   // FETCH COLLECTIONS
-  const fetchCollections = async () => {
+  const fetchCollections = (setResources, setLoading) => {
     const q = query(
       collection(db, "Collections"),
       orderBy("createdAt", "desc")
     );
 
-    try {
-      const querySnapshot = await getDocs(q);
-      const collections = [];
-      querySnapshot.forEach((doc) => {
-        collections.push({ id: doc.id, ...doc.data() });
-      });
-      setResources(collections);
-    } catch (error) {
-      console.error("Error fetching collections: ", error);
-    } finally {
-      setLoading(false);
-    }
+    // Use onSnapshot for real-time updates
+    const unsubscribe = onSnapshot(
+      q,
+      (querySnapshot) => {
+        const collections = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setResources(collections);
+        setLoading(false);
+      },
+      (error) => {
+        console.error("Error fetching collections: ", error);
+        setLoading(false);
+      }
+    );
+
+    // Return unsubscribe function to stop listening when component unmounts
+    return unsubscribe;
   };
 
   // FETCH COLLECTIONS ON COMPONENT MOUNT
   useEffect(() => {
-    fetchCollections();
+    setLoading(true);
+    const unsubscribe = fetchCollections(setResources, setLoading);
+
+    return () => unsubscribe(); // Cleanup listener on unmount
   }, []);
 
   return (
