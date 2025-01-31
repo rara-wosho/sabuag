@@ -33,11 +33,14 @@ const AllRoutes = () => {
           <Route path="projects" element={<ProjectList />} />
           <Route path="collections" element={<Resources />} />
           <Route
-            path="collection-id/:collectionID"
+            path="collection-id/:collectionID/t/:collectionTitle"
             element={<CollectionPage />}
           />
           <Route path="item/:itemID" element={<CollectionItem />} />
-          <Route path="add-item/:collectionID" element={<AddItem />} />
+          <Route
+            path="add-item/:collectionID/t/:collectionTitle"
+            element={<AddItem />}
+          />
           <Route path="profile" element={<Profile />} />
           <Route path="members" element={<Members />} />
           <Route path="reports" element={<Profile />} />

@@ -20,6 +20,7 @@ import { useAuth } from "../../hooks/AuthProvider";
 function Resources() {
   const { userDetails } = useAuth();
   const navigate = useNavigate();
+
   const [loading, setLoading] = useState(true);
   const [resources, setResources] = useState([]);
   const [collectionForm, setCollectionForm] = useState(false);
@@ -30,8 +31,8 @@ function Resources() {
     setCollectionForm((c) => !c);
   };
 
-  const clickCollection = (collectionID) => {
-    navigate("/home/collection-id/" + collectionID);
+  const clickCollection = (collectionID, title) => {
+    navigate("/home/collection-id/" + collectionID + "/t/" + title);
   };
 
   // FETCH COLLECTIONS
@@ -109,7 +110,9 @@ function Resources() {
           {resources.map((collection) => (
             <div className="col mb-2 px-1" key={collection.id}>
               <CollectionCard
-                handlePress={() => clickCollection(collection.id)}
+                handlePress={() =>
+                  clickCollection(collection.id, collection.title)
+                }
                 color={collection.color || "default"}
                 title={collection.title}
                 creatorID={collection.creatorID}

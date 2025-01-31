@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import TextField from "../../components/ui/TextField";
+import { useParams } from "react-router-dom";
 
 import { RiLink } from "react-icons/ri";
 import { GoPlus } from "react-icons/go";
@@ -9,11 +10,18 @@ import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
+import { serverTimestamp, addDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
+
 const MAX_LINKS = 5;
 const MAX_IMAGES = 10;
 
 const AddItem = () => {
   const navigate = useNavigate();
+  const params = useParams();
+  const collectionID = params.collectionID;
+  const collectionTitle = params.collectionTitle;
+
   const [full, setFull] = useState(false);
   const [images, setImages] = useState([{ id: Date.now(), value: "" }]);
   const [links, setLinks] = useState([""]);
@@ -47,6 +55,23 @@ const AddItem = () => {
     setter((prev) => prev.map((field, i) => (i === index ? value : field)));
   };
 
+  const addItem = async (id, title) => {
+    console.log("button clicked");
+    try {
+      // add new item
+      await addDoc(collection(db, "Items"), {
+        ...itemData,
+        collectionName: name,
+        collectionID: id,
+        collectionName: title,
+        createdAt: serverTimestamp(),
+      });
+
+      console.log("added item ok");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="bg-white min-h-vh rounded-4 px-3 pt-3 px-lg-5 pt-lg-5 pb-lg-4">
       {/* Header */}
@@ -57,10 +82,13 @@ const AddItem = () => {
         >
           <IoMdArrowRoundBack size={18} />
           <div className="fw-medium mb-0 ms-1 fs-7 text-truncate">
-            Renx Patrick Projects Bison
+            {collectionTitle}
           </div>
         </div>
-        <button className="btn btn-sm bg-primary-linear text-white px-2 px-md-4">
+        <button
+          onClick={() => addItem(collectionID, collectionTitle)}
+          className="btn btn-sm bg-primary-linear text-white px-2 px-md-4"
+        >
           Save
         </button>
       </div>

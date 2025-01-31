@@ -1,7 +1,8 @@
-import React from "react";
-
+import { useParams } from "react-router-dom";
 function CollectionItem() {
-  return <div>CollectionItem</div>;
+  const params = useParams();
+
+  return <div className="bg-white">{} </div>;
 }
 
 export default CollectionItem;
