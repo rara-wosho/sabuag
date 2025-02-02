@@ -857,6 +857,55 @@ nav.navbar {
 }
 
 /* ALERT  */
+.feedback-alert {
+  position: absolute;
+  z-index: 999999;
+  left: 50%;
+  top: 1rem;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 400px;
+  opacity: 0;
+  border: 2px solid gray;
+  animation: feedback-alert 0.3s ease-out forwards;
+}
+
+.feedback-alert.error {
+  background-color: rgb(255, 230, 230);
+  border-color: rgb(255, 194, 194);
+  color: rgb(209, 0, 0);
+}
+.feedback-alert.error button {
+  color: rgb(197, 0, 0);
+}
+.feedback-alert.success {
+  background-color: rgb(230, 255, 239);
+  border-color: rgb(49, 184, 94);
+  color: rgb(15, 110, 28);
+}
+.feedback-alert.success button {
+  color: rgb(15, 110, 28);
+}
+.feedback-alert.warning {
+  background-color: rgb(255, 254, 238);
+  border-color: rgb(211, 199, 39);
+  color: rgb(206, 174, 14);
+}
+.feedback-alert.warning button {
+  color: rgb(195, 185, 55);
+}
+
+@keyframes feedback-alert {
+  from {
+    opacity: 0;
+    top: -1rem;
+  }
+  to {
+    opacity: 1;
+    top: 1rem;
+  }
+}
+
 .alert-backdrop {
   position: fixed;
   inset: 0;
@@ -877,6 +926,7 @@ nav.navbar {
     opacity: 1;
   }
 }
+
 .alert {
   max-width: 400px;
   width: 100%;

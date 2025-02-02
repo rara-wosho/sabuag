@@ -1,6 +1,8 @@
 import { useState, useRef } from "react";
-import TextField from "../../components/ui/TextField";
 import { useParams } from "react-router-dom";
+
+import TextField from "../../components/ui/TextField";
+import PrimaryButton from "../../components/ui/PrimaryButton";
 
 import { RiLink } from "react-icons/ri";
 import { GoPlus } from "react-icons/go";
@@ -9,8 +11,17 @@ import { CgClose } from "react-icons/cg";
 import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { IoChevronBackOutline } from "react-icons/io5";
 
-import { serverTimestamp, addDoc, collection } from "firebase/firestore";
+import { useAuth } from "../../hooks/AuthProvider";
+
+import {
+  serverTimestamp,
+  addDoc,
+  collection,
+  doc,
+  setDoc,
+} from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 
 const MAX_LINKS = 5;
@@ -18,9 +29,12 @@ const MAX_IMAGES = 10;
 
 const AddItem = () => {
   const navigate = useNavigate();
+  const { userDetails } = useAuth();
   const params = useParams();
   const collectionID = params.collectionID;
   const collectionTitle = params.collectionTitle;
+
+  const [loading, setLoading] = useState(false);
 
   const [full, setFull] = useState(false);
   const [images, setImages] = useState([{ id: Date.now(), value: "" }]);
@@ -31,6 +45,7 @@ const AddItem = () => {
     title: "",
     desc: "",
     content: "",
+    isPinned: false,
   });
 
   const handleChange = (e) => {
@@ -56,41 +71,55 @@ const AddItem = () => {
   };
 
   const addItem = async (id, title) => {
-    console.log("button clicked");
+    setLoading(true);
     try {
       // add new item
-      await addDoc(collection(db, "Items"), {
+      const itemRef = doc(collection(db, "Items"));
+      const creator = userDetails.firstName + " " + userDetails.lastName;
+
+      await setDoc(itemRef, {
         ...itemData,
-        collectionName: name,
+        itemID: itemRef.id,
         collectionID: id,
         collectionName: title,
         createdAt: serverTimestamp(),
+        creator: creator,
+        creatorID: userDetails.userID,
       });
 
       console.log("added item ok");
+      console.log("item id : ", itemRef.id);
+
+      navigate(-1);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
     <div className="bg-white min-h-vh rounded-4 px-3 pt-3 px-lg-5 pt-lg-5 pb-lg-4">
       {/* Header */}
       <div className="d-flex justify-content-between align-items-center pe-1">
         <div
           onClick={() => navigate(-1)}
-          className="pointer d-flex align-items-center p-1 bg-secondary rounded-2 px-2 px-md-3 text-white"
+          className="pointer bg-hover d-flex align-items-center pe-1 py-1 rounded-1"
         >
-          <IoMdArrowRoundBack size={18} />
-          <div className="fw-medium mb-0 ms-1 fs-7 text-truncate">
+          <button className="btn outline-0 text-muted me-1 d-flex center p-0">
+            <IoChevronBackOutline size={18} />
+          </button>
+          <h4 className="text-muted fw-medium normal-text-size mb-0">
             {collectionTitle}
-          </div>
+          </h4>
         </div>
-        <button
-          onClick={() => addItem(collectionID, collectionTitle)}
-          className="btn btn-sm bg-primary-linear text-white px-2 px-md-4"
-        >
-          Save
-        </button>
+
+        <PrimaryButton
+          containerStyle="text-white px-2 px-md-4 rounded-1"
+          handlePress={() => addItem(collectionID, collectionTitle)}
+          label="Save"
+          isLoading={loading}
+        />
       </div>
 
       {/* Form */}
@@ -124,7 +153,7 @@ const AddItem = () => {
             )}
           </div>
           {links.map((link, index) => (
-            <div className="position-relative mb-2" key={index}>
+            <div className="d-flex align-items-center" key={index}>
               <TextField
                 containerStyle="w-100"
                 value={link}
@@ -132,12 +161,15 @@ const AddItem = () => {
                 icon={<RiLink />}
                 label={`Link ${index + 1}`}
               />
-              <CgClose
-                size={16}
-                className="pointer text-white rounded-circle position-absolute shadow-sm bg-secondary"
-                style={{ top: -8, right: 10 }}
+              <div
                 onClick={() => removeField(setLinks, index)}
-              />
+                className="ps-1 py-2 mb-3"
+              >
+                <CgClose
+                  size={16}
+                  className="pointer text-muted rounded-circle"
+                />
+              </div>
             </div>
           ))}
 
@@ -156,10 +188,10 @@ const AddItem = () => {
             )}
           </div>
           {images.map((image, index) => (
-            <div className="d-flex align-items-center mb-2" key={image.id}>
+            <div className="d-flex align-items-center mb-3" key={image.id}>
               <input
                 type="file"
-                className="form-control bg-none text-muted fs-7"
+                className="form-control bg-none outline-0 border-secondary text-muted py-2"
                 value={image.value}
                 onChange={(e) =>
                   updateField(setImages, index, {
@@ -168,9 +200,9 @@ const AddItem = () => {
                   })
                 }
               />
-              <IoIosRemoveCircleOutline
-                size={20}
-                className="pointer text-danger ms-2"
+              <CgClose
+                size={17}
+                className="pointer text-muted ms-1"
                 onClick={() => removeField(setImages, index)}
               />
             </div>

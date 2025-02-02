@@ -9,7 +9,6 @@ function CollectionCard({
   creatorID,
 }) {
   const { userDetails } = useAuth();
-
   return (
     <div
       className={`collection-card ${color} d-flex align-items-center justify-content-between rounded-2 fs-7`}

@@ -20,7 +20,6 @@ const CollectionForm = ({
   open,
   toggleCollectionForm,
   editingCollection,
-  fetchCollections,
   userDetails,
 }) => {
   // feedbacks
@@ -116,7 +115,6 @@ const CollectionForm = ({
       }
 
       resetCollectionData();
-      fetchCollections(); // Refresh the collections list
       toggleCollectionForm(); // Close the form
     } catch (err) {
       console.log("error : ", err);
@@ -130,7 +128,6 @@ const CollectionForm = ({
     try {
       await deleteDoc(doc(db, "Collections", collectionID));
       console.log("deleted doc success");
-      fetchCollections();
       toggleCollectionForm();
     } catch (err) {
       console.log("delete doc error");
@@ -177,8 +174,7 @@ const CollectionForm = ({
           />
 
           {(userDetails.role === "superadmin" ||
-            userDetails.role === "admin" ||
-            userDetails.userID === collectionData.creatorID) && (
+            userDetails.role === "admin") && (
             <p className="text-muted mb-3 fw-medium fs-8">
               By : {collectionData.creatorName}
             </p>

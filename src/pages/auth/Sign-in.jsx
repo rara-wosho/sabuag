@@ -4,25 +4,22 @@ import ToggleDarkMode from "../../components/ui/ToggleDarkmode";
 import Loader from "../../components/ui/Loader";
 
 import TextField from "../../components/ui/TextField";
-import { Snackbar, Alert } from "@mui/material";
 import { MdOutlineMail, MdOutlineLock } from "react-icons/md";
 
 import { useState } from "react";
-import { useAuth } from "../../hooks/AuthProvider";
+import { useAlert } from "../../hooks/AlertContext";
 
 // FIREBASE
+import { useAuth } from "../../hooks/AuthProvider";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 
 const SignIn = () => {
+  const { alert, showAlert } = useAlert();
+
   const { user, loading } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [warning, setWarning] = useState({
-    status: false,
-    message: "",
-    variant: "",
-  });
 
   const [formData, setFormData] = useState({
     email: "",
@@ -63,16 +60,8 @@ const SignIn = () => {
           navigate("/home");
         })
         .catch((error) => {
-          if (error.code === "auth/invalid-credential.") {
-            setWarning((prev) => ({
-              ...prev,
-              status: true,
-              message: "Invalid Credentials",
-              variant: "error",
-            }));
-            setTimeout(() => {
-              setWarning({ status: false, message: "" });
-            }, 3000);
+          if (error.code === "auth/invalid-credential") {
+            showAlert("Invalid Credentials", "error");
           }
 
           setIsLoading(false);
@@ -100,15 +89,6 @@ const SignIn = () => {
         <ToggleDarkMode />
       </div>
 
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={warning.status}
-        key={"top" + "center"}
-      >
-        <Alert sx={{ width: "100%" }} severity={warning.variant}>
-          {warning.message}
-        </Alert>
-      </Snackbar>
       <div className="d-flex align-items-center mb-2">
         <img
           style={{ width: 50, height: 50, objectFit: "contain" }}

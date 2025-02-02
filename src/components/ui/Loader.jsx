@@ -1,11 +1,11 @@
 import "./Loader.css";
 const Loader = () => {
   return (
-    <div className="loading-wave">
-      <div className="loading-bar bg-primary2"></div>
-      <div className="loading-bar bg-primary2"></div>
-      <div className="loading-bar bg-primary2"></div>
-      <div className="loading-bar bg-primary2"></div>
+    <div className="loader">
+      <div className="rounded-circle bg-primary"></div>
+      <div className="rounded-circle bg-secondary"></div>
+      <div className="rounded-circle bg-primary"></div>
+      <div className="rounded-circle bg-secondary"></div>
     </div>
   );
 };

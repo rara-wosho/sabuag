@@ -6,6 +6,7 @@ import { IoChevronBackOutline } from "react-icons/io5";
 import ItemCard from "../../components/ui/ItemCard";
 import SortingTab from "../../components/ui/SortingTab";
 import SearchbarOutline from "../../components/ui/SearchbarOutline";
+import Skeleton from "../../components/ui/Skeleton";
 
 // FIREBASE
 import { query, getDocs, collection, where } from "firebase/firestore";
@@ -18,26 +19,21 @@ const CollectionPage = () => {
   const collectionTitle = params.collectionTitle;
 
   // variable states
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(null);
 
   // feedbacks
   const [loading, setLoading] = useState(false);
 
   const fetchCollectionItems = async (id) => {
-    setLoading(true); // Start loading state
-
-    const q = query(collection(db, "Items"), where("collectionID", "==", id));
+    setLoading(true);
 
     try {
+      const q = query(collection(db, "Items"), where("collectionID", "==", id));
       const querySnapshot = await getDocs(q);
 
-      const fetchedItems = [];
-      querySnapshot.forEach((doc) => {
-        fetchedItems.push({ id: doc.id, ...doc.data() });
-      });
-
-      setItems(fetchedItems); // Update state with fetched items
-      console.log("Fetched items:", fetchedItems);
+      setItems(
+        querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+      );
     } catch (err) {
       console.error("Error fetching items:", err);
     } finally {
@@ -46,19 +42,23 @@ const CollectionPage = () => {
   };
 
   useEffect(() => {
-    fetchCollectionItems(collectionID);
-  }, []);
+    if (collectionID) fetchCollectionItems(collectionID);
+  }, [collectionID]);
 
   // pass the collection id
   const toggleAddItem = (id, title) => {
-    navigate("/home/add-item/" + id + "/t/" + title);
+    navigate(`/home/add-item/${id}/t/${title}`);
   };
+
   return (
     <div>
       {/* COLLECTION CONTENT */}
-      <div className="collection-content bg-white min-h-vh rounded-4 px-3 pt-3 px-lg-5 pt-lg-4 pb-lg-4">
+      <div className="collection-content bg-white min-h-vh rounded-4 px-3 pt-3 px-lg-5 pt-lg-5 pb-lg-4">
         <div className="d-flex align-items-center">
-          <div className="pointer bg-hover d-flex align-items-center pe-1 rounded-1">
+          <div
+            onClick={() => navigate(-1)}
+            className="pointer bg-hover d-flex align-items-center pe-1 py-1 rounded-1"
+          >
             <button className="btn outline-0 text-muted me-1 d-flex center p-0">
               <IoChevronBackOutline size={18} />
             </button>
@@ -81,18 +81,18 @@ const CollectionPage = () => {
             <SortingTab />
           </div>
         </div>
-        <div className="row px-2 px-md-2 row-cols-1 row-cols-md-2 row-cols-lg-3">
-          {loading ? (
-            <p className="text-secondary">Loading items...</p>
-          ) : items.length > 0 ? (
-            items.map((item) => (
-              <div key={item.id} className="col mb-2 px-1">
-                <ItemCard />
-              </div>
-            ))
-          ) : (
-            <p className="text-secondary">No items found.</p>
+        <div className="row px-1 row-cols-1 row-cols-md-2 row-cols-lg-3">
+          {loading && (
+            <p role="status" className="spinner-border ms-2 text-secondary"></p>
           )}
+
+          {!loading && items?.length > 0
+            ? items.map((item) => (
+                <div key={item.id} className="col mb-2 mb-md-3 px-2">
+                  <ItemCard item={item} />
+                </div>
+              ))
+            : !loading && <p className="text-secondary">No items found.</p>}
         </div>
       </div>
     </div>

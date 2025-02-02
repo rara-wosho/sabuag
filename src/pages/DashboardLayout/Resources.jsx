@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { FiPlus } from "react-icons/fi";
 import CollectionCard from "../../components/ui/CollectionCard";
 import SortingTab from "../../components/ui/SortingTab";
@@ -7,13 +7,7 @@ import Skeleton from "../../components/ui/Skeleton";
 import { useNavigate } from "react-router-dom";
 
 // FIREBASE
-import {
-  collection,
-  onSnapshot,
-  getDocs,
-  orderBy,
-  query,
-} from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import { useAuth } from "../../hooks/AuthProvider";
 
@@ -26,6 +20,12 @@ function Resources() {
   const [collectionForm, setCollectionForm] = useState(false);
   const [editingCollection, setEditingCollection] = useState(null); // State for editing
 
+  // sorting variables
+  const [sortingMethods, setSortingMethod] = useState({
+    field: "createdAt",
+    sort: "desc",
+  });
+
   const toggleCollection = (collection = null) => {
     setEditingCollection(collection); // Set the collection to edit (or null for adding)
     setCollectionForm((c) => !c);
@@ -36,13 +36,13 @@ function Resources() {
   };
 
   // FETCH COLLECTIONS
-  const fetchCollections = (setResources, setLoading) => {
+  const fetchCollections = useCallback(() => {
+    setLoading(true);
     const q = query(
       collection(db, "Collections"),
-      orderBy("createdAt", "desc")
+      orderBy(sortingMethods.field, sortingMethods.sort)
     );
 
-    // Use onSnapshot for real-time updates
     const unsubscribe = onSnapshot(
       q,
       (querySnapshot) => {
@@ -50,8 +50,15 @@ function Resources() {
           id: doc.id,
           ...doc.data(),
         }));
-        setResources(collections);
-        setLoading(false);
+
+        setResources((prev) => {
+          if (JSON.stringify(prev) !== JSON.stringify(collections)) {
+            return collections;
+          }
+          return prev;
+        });
+
+        if (loading) setLoading(false);
       },
       (error) => {
         console.error("Error fetching collections: ", error);
@@ -59,17 +66,35 @@ function Resources() {
       }
     );
 
-    // Return unsubscribe function to stop listening when component unmounts
     return unsubscribe;
-  };
+  }, [sortingMethods, loading]);
 
   // FETCH COLLECTIONS ON COMPONENT MOUNT
   useEffect(() => {
-    setLoading(true);
-    const unsubscribe = fetchCollections(setResources, setLoading);
+    const unsubscribe = fetchCollections();
 
     return () => unsubscribe(); // Cleanup listener on unmount
   }, []);
+
+  const sortResources = (resources, sortingMethods) => {
+    const { field, sort } = sortingMethods;
+
+    return resources.sort((a, b) => {
+      const valueA = String(a[field]).toLowerCase(); // Convert to lowercase
+      const valueB = String(b[field]).toLowerCase(); // Convert to lowercase
+
+      if (valueA < valueB) return sort === "asc" ? -1 : 1;
+      if (valueA > valueB) return sort === "asc" ? 1 : -1;
+      return 0;
+    });
+  };
+
+  useEffect(() => {
+    if (resources.length > 0) {
+      const sortedResources = sortResources([...resources], sortingMethods);
+      setResources(sortedResources);
+    }
+  }, [sortingMethods]);
 
   return (
     <div className="bg-white min-h-vh rounded-4 px-3 pt-3 px-lg-5 pt-lg-4 pb-lg-4">
@@ -95,7 +120,11 @@ function Resources() {
         </p>
       </div>
 
-      <SortingTab containerStyle="mb-3" />
+      <SortingTab
+        sortingMethods={sortingMethods}
+        setSortingMethod={setSortingMethod}
+        containerStyle="mb-3"
+      />
 
       {loading ? (
         <div className="row px-2 px-md-2 row-cols-2 row-cols-md-4 row-cols-lg-6">

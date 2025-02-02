@@ -2,6 +2,7 @@ import Announcement from "../../components/dashboard/Announcement";
 import OverviewCards from "../../components/dashboard/OverviewCards";
 import MemberWidget from "../../components/dashboard/MemberWidget";
 import Skeleton from "../../components/ui/Skeleton";
+import Loader from "../../components/ui/Loader";
 
 const Dashboard = () => {
   return (
@@ -10,6 +11,7 @@ const Dashboard = () => {
         <div className="mb-2 col-12 col-md-8 pe-2  ps-2 ps-md-0">
           <OverviewCards />
           <div className="w-100">
+            <Loader />
             <Skeleton
               width={90}
               variant="circular"
