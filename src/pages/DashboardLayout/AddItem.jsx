@@ -6,26 +6,17 @@ import PrimaryButton from "../../components/ui/PrimaryButton";
 
 import { RiLink } from "react-icons/ri";
 import { GoPlus } from "react-icons/go";
-import { IoIosRemoveCircleOutline } from "react-icons/io";
 import { CgClose } from "react-icons/cg";
 import { MdFullscreen, MdFullscreenExit } from "react-icons/md";
-import { IoMdArrowRoundBack } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
 import { IoChevronBackOutline } from "react-icons/io5";
 
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/AuthProvider";
-
-import {
-  serverTimestamp,
-  addDoc,
-  collection,
-  doc,
-  setDoc,
-} from "firebase/firestore";
+import { serverTimestamp, doc, setDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 
 const MAX_LINKS = 5;
-const MAX_IMAGES = 10;
+const MAX_IMAGES = 5;
 
 const AddItem = () => {
   const navigate = useNavigate();
@@ -35,9 +26,8 @@ const AddItem = () => {
   const collectionTitle = params.collectionTitle;
 
   const [loading, setLoading] = useState(false);
-
   const [full, setFull] = useState(false);
-  const [images, setImages] = useState([{ id: Date.now(), value: "" }]);
+  const [images, setImages] = useState([""]);
   const [links, setLinks] = useState([""]);
   const contentRef = useRef(null);
 
@@ -70,10 +60,56 @@ const AddItem = () => {
     setter((prev) => prev.map((field, i) => (i === index ? value : field)));
   };
 
+  // Upload image to Cloudinary
+  const uploadImageToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "sabuag_upload_preset");
+    formData.append("cloud_name", "drr7ha76c");
+
+    try {
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/drr7ha76c/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const data = await response.json();
+      return data.secure_url; // Return the Cloudinary URL
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return null;
+    }
+  };
+
+  // Handle image uploads
+  const handleImageUpload = async (e, index) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.size > 9000000) {
+      console.log("exceed limit : ", file.size);
+      e.target.value = "";
+    } else {
+      const imageUrl = await uploadImageToCloudinary(file);
+
+      if (imageUrl) {
+        console.log(imageUrl);
+        setImages((prev) => {
+          const updatedImages = [...prev];
+          updatedImages[index] = imageUrl;
+          return updatedImages;
+        });
+      }
+    }
+  };
+
+  // Add new item to Firestore
   const addItem = async (id, title) => {
     setLoading(true);
     try {
-      // add new item
       const itemRef = doc(collection(db, "Items"));
       const creator = userDetails.firstName + " " + userDetails.lastName;
 
@@ -82,17 +118,17 @@ const AddItem = () => {
         itemID: itemRef.id,
         collectionID: id,
         collectionName: title,
+        images: images.filter((img) => img), // Filter out empty values
+        links: links.filter((link) => link), // Filter out empty values
         createdAt: serverTimestamp(),
         creator: creator,
         creatorID: userDetails.userID,
       });
 
-      console.log("added item ok");
-      console.log("item id : ", itemRef.id);
-
+      console.log("Item added successfully!");
       navigate(-1);
     } catch (err) {
-      console.log(err);
+      console.error("Error adding item:", err);
     } finally {
       setLoading(false);
     }
@@ -175,12 +211,10 @@ const AddItem = () => {
 
           {/* Images Section */}
           <div className="d-flex align-items-center mt-3 mb-2">
-            <p className="mb-0 fw-medium text-muted fs-7">Images (Max: 10)</p>
+            <p className="mb-0 fw-medium text-muted fs-7">Images (Max: 5)</p>
             {images.length < MAX_IMAGES && (
               <p
-                onClick={() =>
-                  addField(setImages, MAX_IMAGES, { id: Date.now(), value: "" })
-                }
+                onClick={() => addField(setImages, MAX_IMAGES, "")}
                 className="mb-0 ms-auto pointer text-muted fw-medium fs-7"
               >
                 <GoPlus /> Add Image
@@ -188,18 +222,24 @@ const AddItem = () => {
             )}
           </div>
           {images.map((image, index) => (
-            <div className="d-flex align-items-center mb-3" key={image.id}>
+            <div className="d-flex align-items-center mb-3" key={index}>
               <input
                 type="file"
                 className="form-control bg-none outline-0 border-secondary text-muted py-2"
-                value={image.value}
-                onChange={(e) =>
-                  updateField(setImages, index, {
-                    ...image,
-                    value: e.target.value,
-                  })
-                }
+                onChange={(e) => handleImageUpload(e, index)}
               />
+              {image && (
+                <img
+                  src={image}
+                  alt={`Preview ${index}`}
+                  className="ms-2"
+                  style={{
+                    width: "50px",
+                    height: "50px",
+                    objectFit: "contain",
+                  }}
+                />
+              )}
               <CgClose
                 size={17}
                 className="pointer text-muted ms-1"
